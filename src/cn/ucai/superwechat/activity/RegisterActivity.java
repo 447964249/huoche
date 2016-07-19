@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -28,16 +29,21 @@ import com.easemob.EMError;
 import com.easemob.chat.EMChatManager;
 import cn.ucai.superwechat.SuperWeChatApplication;
 import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.bean.Result;
+import cn.ucai.superwechat.utils.OkHttpUtils2;
 import cn.ucai.superwechat.utils.OnSetAvatarListener;
 import cn.ucai.superwechat.widget.I;
 
 import com.easemob.exceptions.EaseMobException;
+
+import java.io.File;
 
 /**
  * 注册页
  * 
  */
 public class RegisterActivity extends BaseActivity {
+	final static String TAG = RegisterActivity.class.getName().toString();
 	private EditText userNameEditText;
 	private EditText userNickEditText;
 	private EditText passwordEditText;
@@ -45,6 +51,11 @@ public class RegisterActivity extends BaseActivity {
 	RelativeLayout layout_useravatar;
 	String AvatarName;
 	ImageView iv_avatar;
+
+	String username;
+	String Nick;
+	String pwd;
+	 ProgressDialog pd;
 
 	public String getAvatarName() {
 		return AvatarName=String.valueOf(SystemClock.currentThreadTimeMillis());
@@ -106,10 +117,10 @@ public class RegisterActivity extends BaseActivity {
 	 * @param view
 	 */
 	public void register(View view) {
-		final String username = userNameEditText.getText().toString().trim();
-		final String pwd = passwordEditText.getText().toString().trim();
-		String Nick = userNickEditText.getText().toString().trim();
-		String confirm_pwd = confirmPwdEditText.getText().toString().trim();
+		 username = userNameEditText.getText().toString().trim();
+		pwd = passwordEditText.getText().toString().trim();
+		        Nick = userNickEditText.getText().toString().trim();
+		       String confirm_pwd = confirmPwdEditText.getText().toString().trim();
 		if (TextUtils.isEmpty(username)) {
 			Toast.makeText(this, getResources().getString(cn.ucai.superwechat.R.string.User_name_cannot_be_empty), Toast.LENGTH_SHORT).show();
 			userNameEditText.requestFocus();
@@ -132,49 +143,87 @@ public class RegisterActivity extends BaseActivity {
 		}
 
 		if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(pwd)) {
-			final ProgressDialog pd = new ProgressDialog(this);
+			 pd = new ProgressDialog(this);
 			pd.setMessage(getResources().getString(cn.ucai.superwechat.R.string.Is_the_registered));
 			pd.show();
-
-			new Thread(new Runnable() {
-				public void run() {
-					try {
-						// 调用sdk注册方法
-						EMChatManager.getInstance().createAccountOnServer(username, pwd);
-						runOnUiThread(new Runnable() {
-							public void run() {
-								if (!RegisterActivity.this.isFinishing())
-									pd.dismiss();
-								// 保存用户名
-								SuperWeChatApplication.getInstance().setUserName(username);
-								Toast.makeText(getApplicationContext(), getResources().getString(cn.ucai.superwechat.R.string.Registered_successfully), Toast.LENGTH_LONG).show();
-								finish();
-							}
-						});
-					} catch (final EaseMobException e) {
-						runOnUiThread(new Runnable() {
-							public void run() {
-								if (!RegisterActivity.this.isFinishing())
-									pd.dismiss();
-								int errorCode=e.getErrorCode();
-								if(errorCode==EMError.NONETWORK_ERROR){
-									Toast.makeText(getApplicationContext(), getResources().getString(cn.ucai.superwechat.R.string.network_anomalies), Toast.LENGTH_SHORT).show();
-								}else if(errorCode == EMError.USER_ALREADY_EXISTS){
-									Toast.makeText(getApplicationContext(), getResources().getString(cn.ucai.superwechat.R.string.User_already_exists), Toast.LENGTH_SHORT).show();
-								}else if(errorCode == EMError.UNAUTHORIZED){
-									Toast.makeText(getApplicationContext(), getResources().getString(cn.ucai.superwechat.R.string.registration_failed_without_permission), Toast.LENGTH_SHORT).show();
-								}else if(errorCode == EMError.ILLEGAL_USER_NAME){
-								    Toast.makeText(getApplicationContext(), getResources().getString(cn.ucai.superwechat.R.string.illegal_user_name),Toast.LENGTH_SHORT).show();
-								}else{
-									Toast.makeText(getApplicationContext(), getResources().getString(cn.ucai.superwechat.R.string.Registration_failed) + e.getMessage(), Toast.LENGTH_SHORT).show();
-								}
-							}
-						});
-					}
-				}
-			}).start();
+                RegisterAppserver();
+		//	RegisterEMserver(username, pwd, pd);
 
 		}
+	}
+
+	private void RegisterAppserver() {
+		File file = new File(OnSetAvatarListener.getAvatarPath(RegisterActivity.this, I.AVATAR_TYPE_USER_PATH)
+				,AvatarName+I.AVATAR_SUFFIX_JPG);
+		OkHttpUtils2<Result> utils = new OkHttpUtils2<Result>();
+		utils.setRequestUrl(I.REQUEST_REGISTER)
+				.addParam(I.User.USER_NAME,username)
+				.addParam(I.User.NICK,Nick)
+				.addParam(I.User.PASSWORD,pwd)
+				.targetClass(Result.class)
+				.addFile(file)
+				.execute(new OkHttpUtils2.OnCompleteListener<Result>() {
+					@Override
+					public void onSuccess(Result result) {
+						if (result.isRetMsg()){
+							RegisterEMserver();
+						}else {
+							Log.e(TAG, "Register:fail "+result.getRetCode() );
+							pd.dismiss();
+						}
+					}
+
+					@Override
+					public void onError(String error) {
+						pd.dismiss();
+						Log.e(TAG, "Register.error: "+error );
+						Toast.makeText(getApplicationContext(), getResources().getString(R.string.Registration_failed), Toast.LENGTH_SHORT).show();
+					}
+				});
+
+	}
+
+	/**
+	 * 调用sdk注册方法，注册环信帐号
+     */
+	private void RegisterEMserver() {
+		new Thread(new Runnable() {
+            public void run() {
+                try {
+                    // 调用sdk注册方法
+                    EMChatManager.getInstance().createAccountOnServer(username, pwd);
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            if (!RegisterActivity.this.isFinishing())
+                                pd.dismiss();
+                            // 保存用户名
+                            SuperWeChatApplication.getInstance().setUserName(username);
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.Registered_successfully), Toast.LENGTH_LONG).show();
+                            finish();
+                        }
+                    });
+                } catch (final EaseMobException e) {
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            if (!RegisterActivity.this.isFinishing())
+                                pd.dismiss();
+                            int errorCode=e.getErrorCode();
+                            if(errorCode== EMError.NONETWORK_ERROR){
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.network_anomalies), Toast.LENGTH_SHORT).show();
+                            }else if(errorCode == EMError.USER_ALREADY_EXISTS){
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.User_already_exists), Toast.LENGTH_SHORT).show();
+                            }else if(errorCode == EMError.UNAUTHORIZED){
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.registration_failed_without_permission), Toast.LENGTH_SHORT).show();
+                            }else if(errorCode == EMError.ILLEGAL_USER_NAME){
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.illegal_user_name),Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.Registration_failed) + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+            }
+        }).start();
 	}
 
 	public void back(View view) {

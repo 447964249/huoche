@@ -2,7 +2,7 @@ package cn.ucai.superwechat.widget;
 
 public interface I {
 	String SERVER_ROOT = "http://10.0.2.2:1614/SuperWeChatServer/Server";
-	String QUESTION = "?";
+	String QUESTION ="?";
 
 	public static interface User {
 		String TABLE_NAME							=		"t_superwechat_user";

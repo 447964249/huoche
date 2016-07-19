@@ -263,7 +263,7 @@ public class OkHttpUtils2<T> {
                 .append(I.KEY_REQUEST)
                 .append(I.EQU)
                 .append(request);
-//        Log.e("okhttp","1 murl="+ mUrl.toString());
+       Log.e("okhttp","1 murl="+ mUrl.toString());
         return this;
     }
 

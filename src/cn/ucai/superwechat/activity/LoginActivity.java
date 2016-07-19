@@ -58,6 +58,7 @@ public class LoginActivity extends BaseActivity {
 
 	private String currentUsername;
 	private String currentPassword;
+	 ProgressDialog pd;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +121,7 @@ public class LoginActivity extends BaseActivity {
 		}
 
 		progressShow = true;
-		final ProgressDialog pd = new ProgressDialog(LoginActivity.this);
+		 pd = new ProgressDialog(LoginActivity.this);
 		pd.setCanceledOnTouchOutside(false);
 		pd.setOnCancelListener(new OnCancelListener() {
 
@@ -133,7 +134,15 @@ public class LoginActivity extends BaseActivity {
 		pd.show();
 
 		final long start = System.currentTimeMillis();
-		// 调用sdk登陆方法登陆聊天服务器
+
+		//EMChatlogin
+		EMChatlogin();
+	}
+
+	/**
+	 * 调用sdk登陆方法登陆聊天服务器
+	 */
+	private void EMChatlogin(){
 		EMChatManager.getInstance().login(currentUsername, currentPassword, new EMCallBack() {
 
 			@Override
@@ -148,7 +157,7 @@ public class LoginActivity extends BaseActivity {
 				try {
 					// ** 第一次登录或者之前logout后再登录，加载所有本地群和回话
 					// ** manually load all local groups and
-				    EMGroupManager.getInstance().loadAllGroups();
+					EMGroupManager.getInstance().loadAllGroups();
 					EMChatManager.getInstance().loadAllConversations();
 					// 处理好友和群组
 					initializeContacts();
@@ -177,7 +186,7 @@ public class LoginActivity extends BaseActivity {
 				Intent intent = new Intent(LoginActivity.this,
 						MainActivity.class);
 				startActivity(intent);
-				
+
 				finish();
 			}
 
@@ -200,7 +209,6 @@ public class LoginActivity extends BaseActivity {
 			}
 		});
 	}
-
 	private void initializeContacts() {
 		Map<String, User> userlist = new HashMap<String, User>();
 		// 添加user"申请与通知"
