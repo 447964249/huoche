@@ -14,17 +14,19 @@
 package cn.ucai.superwechat.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.easemob.EMError;
 import com.easemob.chat.EMChatManager;
-import cn.ucai.superwechat.DemoApplication;
+import cn.ucai.superwechat.SuperWeChatApplication;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.utils.OnSetAvatarListener;
 import cn.ucai.superwechat.widget.I;
@@ -42,6 +44,7 @@ public class RegisterActivity extends BaseActivity {
 	private EditText confirmPwdEditText;
 	RelativeLayout layout_useravatar;
 	String AvatarName;
+	ImageView iv_avatar;
 
 	public String getAvatarName() {
 		return AvatarName=String.valueOf(SystemClock.currentThreadTimeMillis());
@@ -72,9 +75,17 @@ public class RegisterActivity extends BaseActivity {
 		layout_useravatar.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				mOnSetAvatarListener = new OnSetAvatarListener(RegisterActivity.this,R.id.layout_register,getAvatarName(), I.AVATAR_TYPE_USER_PATH);
+				mOnSetAvatarListener = new OnSetAvatarListener(RegisterActivity.this,
+						R.id.layout_register,getAvatarName(), I.AVATAR_TYPE_USER_PATH);
+				//iv_avatar.setImageDrawable(mOnSetAvatarListener);
 			}
 		});
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		mOnSetAvatarListener.setAvatar(requestCode,data,iv_avatar);
 	}
 
 	private void init() {
@@ -85,6 +96,8 @@ public class RegisterActivity extends BaseActivity {
 		confirmPwdEditText = (EditText) findViewById(R.id.confirm_password);
 
 		layout_useravatar = (RelativeLayout) findViewById(R.id.layout_user_avatar);
+		iv_avatar = (ImageView) findViewById(R.id.iv_avatar);
+
 	}
 
 	/**
@@ -133,7 +146,7 @@ public class RegisterActivity extends BaseActivity {
 								if (!RegisterActivity.this.isFinishing())
 									pd.dismiss();
 								// 保存用户名
-								DemoApplication.getInstance().setUserName(username);
+								SuperWeChatApplication.getInstance().setUserName(username);
 								Toast.makeText(getApplicationContext(), getResources().getString(cn.ucai.superwechat.R.string.Registered_successfully), Toast.LENGTH_LONG).show();
 								finish();
 							}
