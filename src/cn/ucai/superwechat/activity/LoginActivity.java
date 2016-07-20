@@ -197,10 +197,12 @@ public class LoginActivity extends BaseActivity {
 
 							UserAvatar user = (UserAvatar) result.getRetData();
 							//保存usertoDB
-							saveUserToDB(user);
 							Log.e(TAG, "user: "+user);
-							//远端服务器登录成功，再登录环信服务器
-							loginSuccess(user);
+							if (user!=null){
+								saveUserToDB(user);
+								//远端服务器登录成功，再登录环信服务器
+								loginSuccess(user);
+							}
 						} else {
 							pd.dismiss();
 							Toast.makeText(getApplicationContext(),
@@ -216,6 +218,10 @@ public class LoginActivity extends BaseActivity {
 				});
 	}
 
+	/**
+	 * 保存user（用户信息）到数据库
+	 * @param user
+     */
 	private void saveUserToDB(UserAvatar user) {
 		UserDao dao = new UserDao(LoginActivity.this);
 		dao.saveuserAvatar(user);
@@ -229,7 +235,7 @@ public class LoginActivity extends BaseActivity {
 		// 登陆成功，保存用户名密码
 		SuperWeChatApplication.getInstance().setUserName(currentUsername);
 		SuperWeChatApplication.getInstance().setPassword(currentPassword);
-		SuperWeChatApplication.getInstance().setUserAvatar(user);
+		SuperWeChatApplication.getInstance().setUser(user);
 		SuperWeChatApplication.currentUserNick = user.getMUserNick();
 
 		try {
@@ -251,12 +257,19 @@ public class LoginActivity extends BaseActivity {
 			});
 			return;
 		}
-		// 更新当前用户的nickname 此方法的作用是在ios离线推送时能够显示用户nick
-		boolean updatenick = EMChatManager.getInstance().updateCurrentUserNick(
-				SuperWeChatApplication.currentUserNick.trim());
-		if (!updatenick) {
-			Log.e("LoginActivity", "update current user nick fail");
-		}
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				// 更新当前用户的nickname 此方法的作用是在ios离线推送时能够显示用户nick
+				boolean updatenick = EMChatManager.getInstance().updateCurrentUserNick(
+						SuperWeChatApplication.currentUserNick.trim());
+				if (!updatenick) {
+					Log.e("LoginActivity", "update current user nick fail");
+				}
+			}
+		}).start();
+
+
 		if (!LoginActivity.this.isFinishing() && pd.isShowing()) {
 			pd.dismiss();
 		}

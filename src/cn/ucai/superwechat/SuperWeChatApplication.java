@@ -110,13 +110,16 @@ public class SuperWeChatApplication extends Application {
 	    hxSDKHelper.logout(isGCM,emCallBack);
 	}
 
-	UserAvatar userAvatar;
+	/**
+	 * 全局的当前登陆信息
+	 */
+	private UserAvatar user;
 
-	public UserAvatar getUserAvatar() {
-		return userAvatar;
+	public UserAvatar getUser() {
+		return user;
 	}
 
-	public void setUserAvatar(UserAvatar userAvatar) {
-		this.userAvatar = userAvatar;
+	public void setUser(UserAvatar user) {
+		this.user = user;
 	}
 }
