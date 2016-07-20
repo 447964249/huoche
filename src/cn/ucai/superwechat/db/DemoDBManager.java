@@ -135,7 +135,7 @@ public class DemoDBManager {
 
 
         if(db.isOpen()){
-            db.replace(UserDao.TABLE_NAME, null, values);
+            db.replace(UserDao.USER_TABLE_NAME, null, values);
         }
     }
     

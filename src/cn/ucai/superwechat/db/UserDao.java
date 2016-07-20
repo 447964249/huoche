@@ -94,7 +94,7 @@ public class UserDao {
 	public void saveContact(User user){
 	    DemoDBManager.getInstance().saveContact(user);
 	}
-	public static void saveuserAvatar(UserAvatar user){
+	public  void saveuserAvatar(UserAvatar user){
 		DemoDBManager.getInstance().saveuserAvatar(user);
 	}
 	public void setDisabledGroups(List<String> groups){
