@@ -19,6 +19,7 @@ import java.util.Map;
 import android.content.Context;
 
 
+import cn.ucai.superwechat.bean.UserAvatar;
 import cn.ucai.superwechat.domain.RobotUser;
 import cn.ucai.superwechat.domain.User;
 
@@ -36,7 +37,24 @@ public class UserDao {
 	public static final String ROBOT_COLUMN_NAME_ID = "username";
 	public static final String ROBOT_COLUMN_NAME_NICK = "nick";
 	public static final String ROBOT_COLUMN_NAME_AVATAR = "avatar";
-	
+
+	//添加昵称和头像的表所需要的常量字段
+	//用户的表名
+	public static final String USER_TABLE_NAME = "t_superwechat_user";
+	//用户ID
+	public static final String USER_COLUMN_NAME_ID = "muserName";
+	//昵称
+	public static final String USER_COLUMN_NAME_NICK = "muserNick";
+	//头像
+	public static final String USER_COLUMN_AVATAR = "mavatarId";
+	//头像路径
+	public static final String USER_COLUMN_AVATAR_PASH = "mavatarPath";
+	//头像类型
+	public static final String USER_COLUMN_AVATAR_TYPE = "mavatarType";
+	//头像最后更新时间
+	public static final String USER_COLUMN_AVATAR_LSTH_UPDATE_TIME = "mavatarLastUpdateTime";
+
+
 	
 	public UserDao(Context context) {
 	    DemoDBManager.getInstance().onInit(context);
@@ -76,7 +94,9 @@ public class UserDao {
 	public void saveContact(User user){
 	    DemoDBManager.getInstance().saveContact(user);
 	}
-	
+	public static void saveuserAvatar(UserAvatar user){
+		DemoDBManager.getInstance().saveuserAvatar(user);
+	}
 	public void setDisabledGroups(List<String> groups){
 	    DemoDBManager.getInstance().setDisabledGroups(groups);
     }

@@ -12,6 +12,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 
 import cn.ucai.superwechat.Constant;
+import cn.ucai.superwechat.bean.UserAvatar;
 import cn.ucai.superwechat.domain.InviteMessage;
 import cn.ucai.superwechat.domain.RobotUser;
 import cn.ucai.superwechat.domain.User;
@@ -118,6 +119,21 @@ public class DemoDBManager {
             values.put(UserDao.COLUMN_NAME_NICK, user.getNick());
         if(user.getAvatar() != null)
             values.put(UserDao.COLUMN_NAME_AVATAR, user.getAvatar());
+        if(db.isOpen()){
+            db.replace(UserDao.TABLE_NAME, null, values);
+        }
+    }
+    synchronized public void saveuserAvatar(UserAvatar user){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(UserDao.USER_COLUMN_NAME_ID, user.getMUserName());
+        values.put(UserDao.USER_COLUMN_NAME_NICK, user.getMUserNick());
+        values.put(UserDao.USER_COLUMN_AVATAR,user.getMAvatarId() );
+        values.put(UserDao.USER_COLUMN_AVATAR_PASH, user.getMAvatarPath());
+        values.put(UserDao.USER_COLUMN_AVATAR_TYPE, user.getMAvatarType());
+        values.put(UserDao.USER_COLUMN_AVATAR_LSTH_UPDATE_TIME, user.getMAvatarLastUpdateTime());
+
+
         if(db.isOpen()){
             db.replace(UserDao.TABLE_NAME, null, values);
         }
