@@ -203,7 +203,8 @@ public class RegisterActivity extends BaseActivity {
                         }
                     });
                 } catch (final EaseMobException e) {
-                    runOnUiThread(new Runnable() {
+
+					runOnUiThread(new Runnable() {
                         public void run() {
                             if (!RegisterActivity.this.isFinishing())
                                 pd.dismiss();
@@ -220,12 +221,36 @@ public class RegisterActivity extends BaseActivity {
                                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.Registration_failed) + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
+
                     });
+					//远端服务器注册成功。环信服务器注册失败。则用此方法删除远端服务器注册的帐号
+					unRegisterAppServer();
                 }
             }
         }).start();
 	}
+	/**
+	 *  删除远端服务期注册的用户
+	 */
 
+private void unRegisterAppServer(){
+	OkHttpUtils2<Result> utils = new OkHttpUtils2<Result>();
+	utils.setRequestUrl(I.REQUEST_UNREGISTER)
+			.addParam(I.User.USER_NAME,username)
+			.targetClass(Result.class)
+			.execute(new OkHttpUtils2.OnCompleteListener<Result>() {
+				@Override
+				public void onSuccess(Result result) {
+					Log.e(TAG, "Register:fail. 删除本地服务端注册的用户-成功");
+				}
+
+				@Override
+				public void onError(String error) {
+					Log.e(TAG, "Register:fail. 删除本地服务端注册的用户-失败");
+				}
+			});
+
+}
 	public void back(View view) {
 		finish();
 	}
