@@ -125,6 +125,7 @@ public interface I {
 	int MSG_ILLEGAL_REQUEST						=		-1;							//非法请求
 
 	String EQU										 = "=";
+	String AND										 = "&";
 	String KEY_REQUEST 							= 		"request";
 	/** 上传图片的类型：user_avatar或group_icon */
 	String AVATAR_TYPE 							= 		"avatarType";

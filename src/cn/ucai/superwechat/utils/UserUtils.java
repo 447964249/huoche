@@ -11,6 +11,8 @@ import cn.ucai.superwechat.DemoHXSDKHelper;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.bean.UserAvatar;
 import cn.ucai.superwechat.domain.User;
+import cn.ucai.superwechat.widget.I;
+
 import com.squareup.picasso.Picasso;
 
 public class UserUtils {
@@ -124,5 +126,35 @@ public class UserUtils {
 		}
 		((DemoHXSDKHelper) HXSDKHelper.getInstance()).saveContact(newUser);
 	}
-    
+	/**
+	 * 设置用户头像改
+	 * @param username
+	 */
+	public static void setUserAppAvatar(Context context, String username, ImageView imageView) {
+		String path = "";
+		//User user = getUserInfo(username);
+		if(path != null &&username!= null){
+			path = getUserAvatarPath(username);
+			Picasso.with(context).load(path).placeholder(R.drawable.default_avatar).into(imageView);
+		}else{
+			Picasso.with(context).load(R.drawable.default_avatar).into(imageView);
+		}
+	}
+
+	private static String getUserAvatarPath(String username){
+		StringBuilder path = new StringBuilder(I.SERVER_ROOT);
+		path.append(I.QUESTION)
+				.append(I.KEY_REQUEST)
+					.append(I.EQU)
+				.append(I.REQUEST_DOWNLOAD_AVATAR)
+					.append(I.AND)
+				.append(I.NAME_OR_HXID)
+					.append(I.EQU)
+				.append(username)
+					.append(I.AND)
+				.append(I.AVATAR_TYPE)
+					.append(I.EQU)
+				.append(I.AVATAR_TYPE_USER_PATH);
+		return path.toString();
+	}
 }
