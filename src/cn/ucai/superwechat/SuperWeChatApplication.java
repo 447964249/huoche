@@ -19,7 +19,9 @@ import android.content.Context;
 import com.easemob.EMCallBack;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cn.ucai.superwechat.bean.UserAvatar;
 
@@ -89,7 +91,6 @@ public class SuperWeChatApplication extends Application {
 	/**
 	 * 设置用户名
 	 *
-	 * @param user
 	 */
 	public void setUserName(String username) {
 	    hxSDKHelper.setHXId(username);
@@ -116,7 +117,21 @@ public class SuperWeChatApplication extends Application {
 	/**全局的当前登陆信息*/
 	private UserAvatar user;
 	/**全局的当前用户好友集合*/
-	private List<UserAvatar> userlist;
+	private List<UserAvatar> userlist=new ArrayList<UserAvatar>();
+	/**全局的当前用户好友Map集合*/
+	private Map<String, UserAvatar> userMap = new HashMap<String, UserAvatar>();
+
+
+
+
+
+	public Map<String, UserAvatar> getUserMap() {
+		return userMap;
+	}
+
+	public void setUserMap(Map<String, UserAvatar> userMap) {
+		this.userMap = userMap;
+	}
 
 	public UserAvatar getUser() {
 		return user;

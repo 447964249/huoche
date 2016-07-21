@@ -120,7 +120,9 @@ public class ContactAdapter extends ArrayAdapter<User>  implements SectionIndexe
 			holder.nameTextview.setText(user.getNick());
 			holder.avatar.setImageResource(cn.ucai.superwechat.R.drawable.groups_icon);
 		}else{
-		    holder.nameTextview.setText(user.getNick());
+		   // holder.nameTextview.setText(user.getNick());
+	//更换显示昵称的方法
+			UserUtils.setAppUserNick(username,holder.nameTextview);
 		    //设置用户头像
 			UserUtils.setUserAvatar(getContext(), username, holder.avatar);
 			if(holder.unreadMsgView != null)
