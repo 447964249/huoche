@@ -120,4 +120,8 @@ public class UserDao {
     public void saveRobotUser(List<RobotUser> robotList){
     	DemoDBManager.getInstance().saveRobotList(robotList);
     }
+
+	public UserAvatar getUserAvatar(String userName) {
+	return 	DemoDBManager.getInstance().getUserAvatar(userName);
+	}
 }
