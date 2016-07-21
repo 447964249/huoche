@@ -32,6 +32,7 @@ import android.widget.TextView;
 import cn.ucai.superwechat.Constant;
 import cn.ucai.superwechat.domain.User;
 import cn.ucai.superwechat.utils.UserUtils;
+import cn.ucai.superwechat.widget.I;
 
 import com.easemob.util.EMLog;
 
@@ -210,7 +211,10 @@ public class ContactAdapter extends ArrayAdapter<User>  implements SectionIndexe
 					String username = user.getUsername();
 					
 					if(username.startsWith(prefixString)){
-						newValues.add(user);
+						if (!username.equals(Constant.GROUP_USERNAME)
+								&&!username.equals(Constant.NEW_FRIENDS_USERNAME)){
+							newValues.add(user);
+						}
 					}
 					else{
 						 final String[] words = username.split(" ");
