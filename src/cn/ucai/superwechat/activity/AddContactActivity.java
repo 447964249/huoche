@@ -92,6 +92,13 @@ public class AddContactActivity extends BaseActivity{
 				startActivity(new Intent(this, AlertDialog.class).putExtra("msg", str));
 				return;
 			}
+//查询已添加好友成功（不为空）。打开好友详情页面
+			UserAvatar userAvatar = SuperWeChatApplication.getInstance().getUserMap().get(toAddUsername);
+			if (userAvatar!=null){
+				startActivity(new Intent(AddContactActivity.this,
+						UserProfileActivity.class).putExtra("username",toAddUsername));
+			}
+
 
 			final OkHttpUtils2<String> utils = new OkHttpUtils2<String>();
 
@@ -109,7 +116,10 @@ public class AddContactActivity extends BaseActivity{
 								if (user!=null){
 									//服务器存在此用户，显示此用户和添加按钮
 									searchedUserLayout.setVisibility(View.VISIBLE);
-									nameText.setText(toAddUsername);
+									//设置详情页面显示头像
+									UserUtils.setAppUserAvatar(AddContactActivity.this, toAddUsername, avatar);
+									//设置详情页面显示昵称
+									nameText.setText(user.getMUserNick());
 
 									tvNothing.setVisibility(View.GONE);
 								}else {

@@ -130,7 +130,7 @@ public class UserUtils {
 	 * 设置用户头像改
 	 * @param username
 	 */
-	public static void setUserAppAvatar(Context context, String username, ImageView imageView) {
+	public static void setAppUserAvatar(Context context, String username, ImageView imageView) {
 		String path = "";
 		//User user = getUserInfo(username);
 		if(path != null &&username!= null){

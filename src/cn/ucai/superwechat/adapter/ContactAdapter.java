@@ -126,7 +126,7 @@ public class ContactAdapter extends ArrayAdapter<User>  implements SectionIndexe
 	//更换显示昵称的方法
 			UserUtils.setAppUserNick(username,holder.nameTextview);
 		    //设置用户头像
-			UserUtils.setUserAppAvatar(getContext(), username, holder.avatar);
+			UserUtils.setAppUserAvatar(getContext(), username, holder.avatar);
 			if(holder.unreadMsgView != null)
 			    holder.unreadMsgView.setVisibility(View.INVISIBLE);
 		}
