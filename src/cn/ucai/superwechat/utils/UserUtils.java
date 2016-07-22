@@ -157,4 +157,13 @@ public class UserUtils {
 				.append(I.AVATAR_TYPE_USER_PATH);
 		return path.toString();
 	}
+
+	public static void setAppCurrentUserNick(TextView tvNickName) {
+		UserAvatar usera = SuperWeChatApplication.getInstance().getUser();
+		//User user = ((DemoHXSDKHelper)HXSDKHelper.getInstance()).getUserProfileManager().getCurrentUserInfo();
+		if(tvNickName != null){
+			tvNickName.setText(usera.getMUserNick());
+		}
+
+	}
 }
