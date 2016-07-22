@@ -173,7 +173,7 @@ public class UserUtils {
 	public static void setAppCurrentUserNick(TextView tvNickName) {
 		UserAvatar usera = SuperWeChatApplication.getInstance().getUser();
 		//User user = ((DemoHXSDKHelper)HXSDKHelper.getInstance()).getUserProfileManager().getCurrentUserInfo();
-		if(tvNickName != null){
+		if(usera != null){
 			tvNickName.setText(usera.getMUserNick());
 		}
 

@@ -15,6 +15,7 @@ import cn.ucai.superwechat.utils.Utils;
 import cn.ucai.superwechat.widget.I;
 
 /**
+ * 下载联系人集合的任务栈
  * Created by Administrator on 2016/7/20.
  */
 public class DownloadContactListTask {
