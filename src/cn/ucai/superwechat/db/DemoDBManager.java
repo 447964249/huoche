@@ -387,4 +387,15 @@ public class DemoDBManager {
         }
         return user;
     }
+
+
+    synchronized  public void updateUsernick(UserAvatar user) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(UserDao.USER_COLUMN_NAME_NICK, user.getMUserName());
+        if (db.isOpen()){
+            db.update(UserDao.USER_TABLE_NAME, values,
+                    UserDao.USER_COLUMN_NAME_ID + "= ?", new String[]{user.getMUserName()});
+        }
+    }
 }

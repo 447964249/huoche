@@ -34,6 +34,7 @@ import cn.ucai.superwechat.DemoHXSDKHelper;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.bean.Result;
 import cn.ucai.superwechat.bean.UserAvatar;
+import cn.ucai.superwechat.db.UserDao;
 import cn.ucai.superwechat.domain.User;
 import cn.ucai.superwechat.utils.OkHttpUtils2;
 import cn.ucai.superwechat.utils.UserUtils;
@@ -146,6 +147,8 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
                             if (user != null) {
                                 SuperWeChatApplication.getInstance().setUser(user);
                                 SuperWeChatApplication.currentUserNick = user.getMUserNick();
+                                UserDao dao = new UserDao(UserProfileActivity.this);
+                                dao.updateUsernick(user);
 
                                 updateRemoteNick(nickString);
                                 dialog.dismiss();
