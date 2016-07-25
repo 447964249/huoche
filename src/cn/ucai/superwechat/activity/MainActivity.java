@@ -609,7 +609,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 
 			for (final String name:toDelUserName){
 				OkHttpUtils2 utils2 = new OkHttpUtils2();
-				utils2.setRequestUrl(I.REQUEST_ADD_CONTACT)
+				utils2.setRequestUrl(I.REQUEST_DELETE_CONTACT)
 						.addParam(I.Contact.USER_NAME,currentUserName)
 						.addParam(I.Contact.CU_NAME,name)
 						.targetClass(Result.class)
