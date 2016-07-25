@@ -589,10 +589,47 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 		public void onContactDeleted(final List<String> usernameList) {
 			// 被删除
 			Map<String, User> localUsers = ((DemoHXSDKHelper)HXSDKHelper.getInstance()).getContactList();
+			Map<String, UserAvatar> userAvatarMap = SuperWeChatApplication.getInstance().getUserMap();
+			List<UserAvatar> UserList = SuperWeChatApplication.getInstance().getUserlist();
+			String currentUserName = SuperWeChatApplication.getInstance().getUserName();
+			List<String> toDelUserName = new ArrayList<String>();
+
 			for (String username : usernameList) {
+				//
+				localUsers.remove(username);
+				toDelUserName.add(username);
+				UserAvatar u = userAvatarMap.get(username);
+				UserList.remove(u);
+
+
 				localUsers.remove(username);
 				userDao.deleteContact(username);
 				inviteMessgeDao.deleteMessage(username);
+			}
+
+			for (final String name:toDelUserName){
+				OkHttpUtils2 utils2 = new OkHttpUtils2();
+				utils2.setRequestUrl(I.REQUEST_ADD_CONTACT)
+						.addParam(I.Contact.USER_NAME,currentUserName)
+						.addParam(I.Contact.CU_NAME,name)
+						.targetClass(Result.class)
+						.execute(new OkHttpUtils2.OnCompleteListener() {
+							@Override
+							public void onSuccess(Object result) {
+								Map<String,UserAvatar> userMap = SuperWeChatApplication.getInstance().getUserMap();
+								List<UserAvatar> userList = SuperWeChatApplication.getInstance().getUserlist();
+								UserAvatar user = userMap.get(name);
+								userList.remove(user);
+								userMap.remove(name);
+								sendStickyBroadcast(new Intent("update_contact_list"));
+
+							}
+
+							@Override
+							public void onError(String error) {
+
+							}
+						});
 			}
 			runOnUiThread(new Runnable() {
 				public void run() {
