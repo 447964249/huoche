@@ -172,18 +172,8 @@ public class NewGroupActivity extends BaseActivity {
 
 	private void creteAppGroup(final String groupId, String groupName, String desc, final String[] members) {
 		Log.i("main", "在里面");
-		int isPublic;
-		int invites;
-		if (checkBox.isChecked()) {
-			isPublic = 1;
-		} else {
-			isPublic =0;
-		}
-		if (isPublic == 1) {
-			invites = 0;
-		} else {
-			invites = 1;
-		}
+		boolean isPublic=checkBox.isChecked();
+		boolean invites=!isPublic;
 
 		File file = new File(OnSetAvatarListener.getAvatarPath(NewGroupActivity.this,
 				I.AVATAR_TYPE_GROUP_PATH), groupNameEditText.getText().toString()+I.AVATAR_SUFFIX_JPG);
@@ -202,7 +192,7 @@ public class NewGroupActivity extends BaseActivity {
 					@Override
 					public void onSuccess(String s) {
 						Result result = Utils.getResultFromJson(s, GroupAvatar.class);
-						GroupAvatar groupAvatar = (GroupAvatar) result.getRetData();
+					//	GroupAvatar groupAvatar = (GroupAvatar) result.getRetData();
 						if (result != null && result.isRetMsg()) {
 							Log.i("main", "成功了：");
 							if (members != null && members.length > 0) {
@@ -234,20 +224,31 @@ public class NewGroupActivity extends BaseActivity {
 		for (String m : members) {
 			memberArr+=m + ",";
 		}
-		memberArr = memberArr.substring(0, memberArr.length() - 1);
+		memberArr = memberArr.substring(0, memberArr.length()-1);
 		final OkHttpUtils2<String> utils = new OkHttpUtils2<String>();
 		utils.setRequestUrl(I.REQUEST_ADD_GROUP_MEMBERS)
-				.addParam(I.Member.USER_NAME, memberArr)
 				.addParam(I.Member.GROUP_HX_ID, hxId)
+				.addParam(I.Member.USER_NAME, memberArr)
 				.targetClass(String.class)
 				.execute(new OkHttpUtils2.OnCompleteListener<String>() {
 					@Override
-					public void onSuccess(String result) {
-
+					public void onSuccess(String s) {
+						Result result = Utils.getResultFromJson(s, GroupAvatar.class);
+						GroupAvatar groupAvatar = (GroupAvatar) result.getRetData();
+						if (result != null && result.isRetMsg()) {
+							Log.i("main", "成功了：");
+							progressDialog.dismiss();
+							setResult(RESULT_OK);
+							finish();
+						}else {
+							progressDialog.dismiss();
+							Toast.makeText(NewGroupActivity.this, "失败了了了了了", Toast.LENGTH_LONG).show();
+						}
 					}
 
 					@Override
 					public void onError(String error) {
+						progressDialog.dismiss();
 
 					}
 				});
