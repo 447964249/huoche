@@ -716,7 +716,8 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
 		if (id == R.id.btn_send) {// 点击发送按钮(发文字和表情)
 			String s = mEditTextContent.getText().toString();
 			sendText(s);
-		} else if (id == R.id.btn_take_picture) {
+		} else if (id
+				== R.id.btn_take_picture) {
 			selectPicFromCamera();// 点击照相图标
 		} else if (id == R.id.btn_picture) {
 			selectPicFromLocal(); // 点击图片图标
