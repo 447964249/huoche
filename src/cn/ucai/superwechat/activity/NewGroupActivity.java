@@ -219,6 +219,8 @@ public class NewGroupActivity extends BaseActivity {
 
 	}
 
+
+
 	private void addGroupMembers(String hxId, String[] members) {
 		String memberArr = "";
 		for (String m : members) {
