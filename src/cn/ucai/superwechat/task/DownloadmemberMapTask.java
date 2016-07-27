@@ -49,7 +49,7 @@ public class DownloadmemberMapTask {
                             for (MemberUserAvatar u : list) {
                                 hxidmembers.put(u.getMUserName(), u);
                             }
-                                context.sendStickyBroadcast(new Intent("update_group_list"));
+                                context.sendStickyBroadcast(new Intent("update_member_list"));
                         }
                     }
 
