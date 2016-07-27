@@ -17,8 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -88,7 +90,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	private ImageView iv_switch_unblock_groupmsg;
 
 	public static GroupDetailsActivity instance;
-	
+
 	String st = "";
 	// 清空所有聊天记录
 	private RelativeLayout clearAllHistory;
@@ -100,7 +102,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
-	    
+
 	    // 获取传过来的groupid
         groupId = getIntent().getStringExtra("groupId");
         group = EMGroupManager.getInstance().getGroup(groupId);
@@ -110,7 +112,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
             finish();
             return;
         }
-        
+
 		setContentView(R.layout.activity_group_details);
 		instance = this;
 		st = getResources().getString(R.string.people);
@@ -124,7 +126,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		idLayout = (RelativeLayout) findViewById(R.id.rl_group_id);
 		idLayout.setVisibility(View.VISIBLE);
 		idText = (TextView) findViewById(R.id.tv_group_id_value);
-		
+
 		rl_switch_block_groupmsg = (RelativeLayout) findViewById(R.id.rl_switch_block_groupmsg);
 
 		iv_switch_block_groupmsg = (ImageView) findViewById(R.id.iv_switch_block_groupmsg);
@@ -150,12 +152,12 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 			exitBtn.setVisibility(View.GONE);
 			deleteBtn.setVisibility(View.VISIBLE);
 		}
-		
+
 		((TextView) findViewById(R.id.group_name)).setText(group.getGroupName() + "(" + group.getAffiliationsCount() + st);
-		
+
 		List<String> members = new ArrayList<String>();
 		members.addAll(group.getMembers());
-		
+
 		adapter = new GridAdapter(this, R.layout.grid, members);
 		userGridview.setAdapter(adapter);
 
@@ -185,7 +187,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		clearAllHistory.setOnClickListener(this);
 		blacklistLayout.setOnClickListener(this);
 		changeGroupNameLayout.setOnClickListener(this);
-
+		setUpdateMemberReceiver();
 	}
 
 	@Override
@@ -200,7 +202,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		final String st7 = getResources().getString(R.string.change_the_group_name_failed_please);
 		String st8 = getResources().getString(R.string.Are_moving_to_blacklist);
 		final String st9 = getResources().getString(R.string.failed_to_move_into);
-		
+
 		final String stsuccess = getResources().getString(R.string.Move_into_blacklist_success);
 		if (resultCode == RESULT_OK) {
 			if (progressDialog == null) {
@@ -237,7 +239,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 				if(!TextUtils.isEmpty(returnData)){
 					progressDialog.setMessage(st5);
 					progressDialog.show();
-					
+
 					new Thread(new Runnable() {
 						public void run() {
 							try {
@@ -250,7 +252,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 										Toast.makeText(getApplicationContext(), st6, 0).show();
 									}
 								});
-								
+
 							} catch (EaseMobException e) {
 								e.printStackTrace();
 								runOnUiThread(new Runnable() {
@@ -298,17 +300,17 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 
 	private void refreshMembers(){
 	    adapter.clear();
-        
+
         List<String> members = new ArrayList<String>();
         members.addAll(group.getMembers());
         adapter.addAll(members);
-        
+
         adapter.notifyDataSetChanged();
 	}
-	
+
 	/**
 	 * 点击退出群组按钮
-	 * 
+	 *
 	 * @param view
 	 */
 	public void exitGroup(View view) {
@@ -318,7 +320,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 
 	/**
 	 * 点击解散群组按钮
-	 * 
+	 *
 	 * @param view
 	 */
 	public void exitDeleteGroup(View view) {
@@ -340,7 +342,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 
 	/**
 	 * 退出群组
-	 * 
+	 *
 	 * @param
 	 */
 	private void exitGrop() {
@@ -372,7 +374,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 
 	/**
 	 * 解散群组
-	 * 
+	 *
 	 * @param
 	 */
 	private void deleteGrop() {
@@ -404,13 +406,13 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 
 	/**
 	 * 增加群成员
-	 * 
+	 *
 	 * @param newmembers
 	 */
 	private void addMembersToGroup(final String[] newmembers) {
 		final String st6 = getResources().getString(R.string.Add_group_members_fail);
 		new Thread(new Runnable() {
-			
+
 			public void run() {
 				try {
 					// 创建者调用add方法
@@ -446,7 +448,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		for (String m : members) {
 			memberArr+=m + ",";
 		}
-		memberArr = memberArr.substring(0, memberArr.length()-2);
+		memberArr = memberArr.substring(0, memberArr.length()-1);
 		final OkHttpUtils2<String> utils = new OkHttpUtils2<String>();
 		utils.setRequestUrl(I.REQUEST_ADD_GROUP_MEMBERS)
 				.addParam(I.Member.GROUP_HX_ID, hxId)
@@ -508,11 +510,11 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
                                     Toast.makeText(getApplicationContext(), st7, 1).show();
                                 }
                             });
-                            
+
                         }
                     }
                 }).start();
-				
+
 			} else {
 				String st8 = getResources().getString(R.string.group_is_blocked);
 				final String st9 = getResources().getString(R.string.group_of_shielding);
@@ -543,7 +545,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
                                 }
                             });
                         }
-                        
+
                     }
                 }).start();
 			}
@@ -574,9 +576,9 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 
 	/**
 	 * 群组成员gridadapter
-	 * 
+	 *
 	 * @author admin_new
-	 * 
+	 *
 	 */
 	private class GridAdapter extends ArrayAdapter<String> {
 
@@ -710,7 +712,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 
 					/**
 					 * 删除群成员
-					 * 
+					 *
 					 * @param username
 					 */
 					protected void deleteMembersFromGroup(final String username) {
@@ -839,11 +841,25 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		super.onDestroy();
 		instance = null;
 	}
-	
+
 	private static class ViewHolder{
 	    ImageView imageView;
 	    TextView textView;
 	    ImageView badgeDeleteView;
 	}
 
+	class UpdateMemberReceiver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			refreshMembers();
+		}
+	}
+
+	UpdateMemberReceiver memberReceiver;
+	private  void  setUpdateMemberReceiver(){
+		memberReceiver = new UpdateMemberReceiver();
+		IntentFilter filter = new IntentFilter("update_member_list");
+		registerReceiver(memberReceiver, filter);
+	}
 }
