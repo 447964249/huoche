@@ -334,7 +334,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	/**
 	 * 退出群组
 	 * 
-	 * @param groupId
+	 * @param
 	 */
 	private void exitGrop() {
 		String st1 = getResources().getString(R.string.Exit_the_group_chat_failure);
@@ -366,7 +366,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	/**
 	 * 解散群组
 	 * 
-	 * @param groupId
+	 * @param
 	 */
 	private void deleteGrop() {
 		final String st5 = getResources().getString(R.string.Dissolve_group_chat_tofail);
@@ -627,8 +627,9 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 //				Drawable avatar = getResources().getDrawable(R.drawable.default_avatar);
 //				avatar.setBounds(0, 0, referenceWidth, referenceHeight);
 //				button.setCompoundDrawables(null, avatar, null, null);
-				holder.textView.setText(username);
-				UserUtils.setUserAvatar(getContext(), username, holder.imageView);
+			//	holder.textView.setText(username);
+				UserUtils.setAppMemberNick(groupId,username,holder.textView);
+				UserUtils.setAppUserAvatar(getContext(), username, holder.imageView);
 				// demo群组成员的头像都用默认头像，需由开发者自己去设置头像
 				if (isInDeleteMode) {
 					// 如果是删除模式下，显示减人图标
