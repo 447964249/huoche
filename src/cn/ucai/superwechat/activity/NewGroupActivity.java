@@ -192,19 +192,14 @@ public class NewGroupActivity extends BaseActivity {
 					@Override
 					public void onSuccess(String s) {
 						Result result = Utils.getResultFromJson(s, GroupAvatar.class);
-					//	GroupAvatar groupAvatar = (GroupAvatar) result.getRetData();
+						GroupAvatar groupAvatar = (GroupAvatar) result.getRetData();
 						if (result != null && result.isRetMsg()) {
 							Log.i("main", "成功了：");
 							if (members != null && members.length > 0) {
 								addGroupMembers(groupId,members);
 							} else {
-								runOnUiThread(new Runnable() {
-									public void run() {
-										progressDialog.dismiss();
-										setResult(RESULT_OK);
-										finish();
-									}
-								});
+								createGroupSuccess(groupAvatar);
+
 							}
 
 						}
@@ -219,6 +214,18 @@ public class NewGroupActivity extends BaseActivity {
 
 	}
 
+	private void createGroupSuccess(GroupAvatar groupAvatar) {
+		SuperWeChatApplication.getInstance().getGroupMap().put(groupAvatar.getMGroupHxid(), groupAvatar);
+		SuperWeChatApplication.getInstance().getGrouplist().add(groupAvatar);
+		runOnUiThread(new Runnable() {
+			public void run() {
+				progressDialog.dismiss();
+				setResult(RESULT_OK);
+				finish();
+			}
+		});
+
+	}
 
 
 	private void addGroupMembers(String hxId, String[] members) {
@@ -239,9 +246,7 @@ public class NewGroupActivity extends BaseActivity {
 						GroupAvatar groupAvatar = (GroupAvatar) result.getRetData();
 						if (result != null && result.isRetMsg()) {
 							Log.i("main", "成功了：");
-							progressDialog.dismiss();
-							setResult(RESULT_OK);
-							finish();
+							createGroupSuccess(groupAvatar);
 						}else {
 							progressDialog.dismiss();
 							Toast.makeText(NewGroupActivity.this, "失败了了了了了", Toast.LENGTH_LONG).show();
