@@ -40,6 +40,8 @@ import com.easemob.chat.EMGroupInfo;
 import com.easemob.chat.EMGroupManager;
 import com.easemob.exceptions.EaseMobException;
 
+import cn.ucai.superwechat.SuperWeChatApplication;
+
 public class PublicGroupsActivity extends BaseActivity {
 	private ProgressBar pb;
 	private ListView listView;
@@ -129,7 +131,12 @@ public class PublicGroupsActivity extends BaseActivity {
 
                         public void run() {
                             searchBtn.setVisibility(View.VISIBLE);
-                            groupsList.addAll(returnGroups);
+                            for (EMGroupInfo g : returnGroups) {
+                                if (!SuperWeChatApplication.getInstance().getGroupMap().containsKey(g.getGroupId())) {
+                                    groupsList.addAll(returnGroups);
+                                }
+                            }
+
                             if(returnGroups.size() != 0){
                                 //获取cursor
                                 cursor = result.getCursor();
