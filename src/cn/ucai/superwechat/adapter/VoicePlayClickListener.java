@@ -34,7 +34,7 @@ import com.easemob.chat.VoiceMessageBody;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.activity.ChatActivity;
 import com.easemob.util.EMLog;
-
+@SuppressWarnings("ResourceType")
 public class VoicePlayClickListener implements View.OnClickListener {
 	private static final String TAG = "VoicePlayClickListener";
 	EMMessage message;
