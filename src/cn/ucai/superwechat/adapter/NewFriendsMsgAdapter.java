@@ -35,10 +35,12 @@ import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroupManager;
 
 import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.bean.GroupAvatar;
 import cn.ucai.superwechat.bean.Result;
 import cn.ucai.superwechat.bean.UserAvatar;
 import cn.ucai.superwechat.db.InviteMessgeDao;
 import cn.ucai.superwechat.domain.InviteMessage;
+import cn.ucai.superwechat.task.DownloadmemberMapTask;
 import cn.ucai.superwechat.utils.OkHttpUtils2;
 import cn.ucai.superwechat.utils.UserUtils;
 import cn.ucai.superwechat.utils.Utils;
@@ -187,6 +189,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
                         EMChatManager.getInstance().acceptInvitation(msg.getFrom());
                     else //同意加群申请
                         EMGroupManager.getInstance().acceptApplication(msg.getFrom(), msg.getGroupId());
+                    addMemberToAppGroup(msg.getFrom(),msg.getGroupId());
                     ((Activity) context).runOnUiThread(new Runnable() {
 
                         @Override
@@ -216,6 +219,29 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
                 }
             }
         }).start();
+    }
+
+    private void addMemberToAppGroup(String username, final String hxId) {
+        OkHttpUtils2<String> utils = new OkHttpUtils2<String>();
+        utils.setRequestUrl(I.REQUEST_ADD_GROUP_MEMBER)
+                .addParam(I.Member.USER_NAME,username)
+                .addParam(I.Member.GROUP_HX_ID,hxId)
+                .targetClass(String.class)
+                .execute(new OkHttpUtils2.OnCompleteListener<String>() {
+                    @Override
+                    public void onSuccess(String s) {
+                        Result reslt = Utils.getResultFromJson(s, GroupAvatar.class);
+                        if (reslt != null && reslt.isRetMsg()) {
+                            new DownloadmemberMapTask(context, hxId).execute();
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+
+                    }
+                });
+
     }
 
     private static class ViewHolder {
