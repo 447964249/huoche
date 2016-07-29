@@ -28,7 +28,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-import cn.ucai.fulicenter.SuperWeChatApplication;
+import cn.ucai.fulicenter.fulicenter;
 import cn.ucai.fulicenter.widget.I;
 
 /**
@@ -103,7 +103,7 @@ public class OkHttpUtils2<T> {
 
     /**初始化mHandler*/
     private void initHandler() {
-        mHandler = new Handler(SuperWeChatApplication.applicationContext.getMainLooper()) {
+        mHandler = new Handler(fulicenter.applicationContext.getMainLooper()) {
             @Override
             public void handleMessage(Message msg) {
                 switch (msg.what) {

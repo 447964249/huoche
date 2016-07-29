@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.ucai.fulicenter.SuperWeChatApplication;
+import cn.ucai.fulicenter.fulicenter;
 import cn.ucai.fulicenter.bean.MemberUserAvatar;
 import cn.ucai.fulicenter.bean.Result;
 import cn.ucai.fulicenter.utils.OkHttpUtils2;
@@ -40,7 +40,7 @@ public class DownloadmemberMapTask {
                         if (list!=null&&list.size()>0){
                             Log.e(TAG, "onSuccess: list="+list);
                             Map<String, HashMap<String, MemberUserAvatar>> map =
-                                    SuperWeChatApplication.getInstance().getMemberMap();
+                                    fulicenter.getInstance().getMemberMap();
                             if (!map.containsKey(hxid)) {
                                 map.put(hxid, new HashMap<String, MemberUserAvatar>());
                             }

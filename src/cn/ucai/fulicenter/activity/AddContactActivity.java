@@ -30,7 +30,7 @@ import android.widget.Toast;
 import cn.ucai.fulicenter.applib.controller.HXSDKHelper;
 import com.easemob.chat.EMContactManager;
 
-import cn.ucai.fulicenter.SuperWeChatApplication;
+import cn.ucai.fulicenter.fulicenter;
 import cn.ucai.fulicenter.DemoHXSDKHelper;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.Result;
@@ -87,13 +87,13 @@ public class AddContactActivity extends BaseActivity{
 				startActivity(new Intent(this, AlertDialog.class).putExtra("msg", st));
 				return;
 			}
-			if(SuperWeChatApplication.getInstance().getUserName().equals(toAddUsername)){
+			if(fulicenter.getInstance().getUserName().equals(toAddUsername)){
 				String str = getString(R.string.not_add_myself);
 				startActivity(new Intent(this, AlertDialog.class).putExtra("msg", str));
 				return;
 			}
 //查询已添加好友成功（不为空）。打开好友详情页面
-			UserAvatar userAvatar = SuperWeChatApplication.getInstance().getUserMap().get(toAddUsername);
+			UserAvatar userAvatar = fulicenter.getInstance().getUserMap().get(toAddUsername);
 			if (userAvatar!=null){
 				startActivity(new Intent(AddContactActivity.this,
 						UserProfileActivity.class).putExtra("username",toAddUsername));
@@ -115,7 +115,7 @@ public class AddContactActivity extends BaseActivity{
 	 * @param view
 	 */
 	public void addContact(View view){
-		if(SuperWeChatApplication.getInstance().getUserName().equals(nameText.getText().toString())){
+		if(fulicenter.getInstance().getUserName().equals(nameText.getText().toString())){
 			String str = getString(R.string.not_add_myself);
 			startActivity(new Intent(this, AlertDialog.class).putExtra("msg", str));
 			return;

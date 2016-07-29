@@ -15,7 +15,7 @@ import com.easemob.chat.EMGroupManager;
 
 import cn.ucai.fulicenter.DemoHXSDKHelper;
 import cn.ucai.fulicenter.R;
-import cn.ucai.fulicenter.SuperWeChatApplication;
+import cn.ucai.fulicenter.fulicenter;
 import cn.ucai.fulicenter.bean.Result;
 import cn.ucai.fulicenter.bean.UserAvatar;
 import cn.ucai.fulicenter.db.UserDao;
@@ -62,7 +62,7 @@ public class SplashActivity extends BaseActivity {
                     long start = System.currentTimeMillis();
                     EMGroupManager.getInstance().loadAllGroups();
                     EMChatManager.getInstance().loadAllConversations();
-                    String userName = SuperWeChatApplication.getInstance().getUserName();
+                    String userName = fulicenter.getInstance().getUserName();
                     Log.e(TAG, "userName: " + userName);
 
                     UserDao dao = new UserDao(SplashActivity.this);
@@ -82,8 +82,8 @@ public class SplashActivity extends BaseActivity {
                                         if (result!=null&&result.isRetMsg()){
                                             UserAvatar user = (UserAvatar) result.getRetData();
                                             if (user!=null){
-                                                SuperWeChatApplication.getInstance().setUser(user);
-                                                SuperWeChatApplication.currentUserNick = user.getMUserNick();
+                                                fulicenter.getInstance().setUser(user);
+                                                fulicenter.currentUserNick = user.getMUserNick();
                                             }
                                         }
                                     }
@@ -92,8 +92,8 @@ public class SplashActivity extends BaseActivity {
                                     }
                                 });
                     }else   {
-                        SuperWeChatApplication.getInstance().setUser(user);
-                        SuperWeChatApplication.currentUserNick = user.getMUserNick();
+                        fulicenter.getInstance().setUser(user);
+                        fulicenter.currentUserNick = user.getMUserNick();
                     }
                     new DownloadContactListTask(SplashActivity.this, userName).execute();
                     new DownloadGroupListTask(SplashActivity.this, userName).execute();
