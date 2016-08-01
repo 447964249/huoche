@@ -12,7 +12,7 @@ import cn.ucai.fulicenter.bean.Result;
 import cn.ucai.fulicenter.bean.UserAvatar;
 import cn.ucai.fulicenter.utils.OkHttpUtils2;
 import cn.ucai.fulicenter.utils.Utils;
-import cn.ucai.fulicenter.widget.I;
+import cn.ucai.fulicenter.I;
 
 /**
  * 下载联系人集合的任务栈

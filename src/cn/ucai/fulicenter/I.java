@@ -1,4 +1,6 @@
-package cn.ucai.fulicenter.widget;
+package cn.ucai.fulicenter;
+
+import cn.ucai.fulicenter.widget.D;
 
 public interface I {
 	String SERVER_ROOT = "http://10.0.2.2:1614/ FuLiCenterServer/Server";
@@ -494,7 +496,7 @@ public interface I {
     /** 下载分类商品大类图像的接口*/
     String DOWNLOAD_DOWNLOAD_CATEGORY_GROUP_IMAGE_URL= I.SERVER_ROOT+
         "?request="+REQUEST_DOWNLOAD_CATEGORY_GROUP_IMAGE
-        +"&"+D.CategoryGroup.IMAGE_URL+"=";
+        +"&"+ D.CategoryGroup.IMAGE_URL+"=";
 
     /** 下载收藏商品图像的请求*/
     String REQUEST_DOWNLOAD_GOODS_THUMB="download_goods_thumb";

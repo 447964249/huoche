@@ -22,7 +22,7 @@ import cn.ucai.fulicenter.db.UserDao;
 import cn.ucai.fulicenter.task.DownloadContactListTask;
 import cn.ucai.fulicenter.utils.OkHttpUtils2;
 import cn.ucai.fulicenter.utils.Utils;
-import cn.ucai.fulicenter.widget.I;
+import cn.ucai.fulicenter.I;
 
 /**
  * 开屏页

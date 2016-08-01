@@ -41,7 +41,7 @@ import cn.ucai.fulicenter.utils.OkHttpUtils2;
 import cn.ucai.fulicenter.utils.OnSetAvatarListener;
 import cn.ucai.fulicenter.utils.UserUtils;
 import cn.ucai.fulicenter.utils.Utils;
-import cn.ucai.fulicenter.widget.I;
+import cn.ucai.fulicenter.I;
 
 import com.squareup.picasso.Picasso;
 

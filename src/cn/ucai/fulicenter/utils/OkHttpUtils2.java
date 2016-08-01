@@ -29,7 +29,7 @@ import java.util.List;
 
 
 import cn.ucai.fulicenter.fulicenter;
-import cn.ucai.fulicenter.widget.I;
+import cn.ucai.fulicenter.I;
 
 /**
  *  * OkHttp框架的二次封装

@@ -9,14 +9,11 @@ import cn.ucai.fulicenter.fulicenter;
 import cn.ucai.fulicenter.applib.controller.HXSDKHelper;
 import cn.ucai.fulicenter.DemoHXSDKHelper;
 import cn.ucai.fulicenter.R;
-import cn.ucai.fulicenter.bean.MemberUserAvatar;
 import cn.ucai.fulicenter.bean.UserAvatar;
 import cn.ucai.fulicenter.domain.User;
-import cn.ucai.fulicenter.widget.I;
+import cn.ucai.fulicenter.I;
 
 import com.squareup.picasso.Picasso;
-
-import java.util.HashMap;
 
 public class UserUtils {
     /**

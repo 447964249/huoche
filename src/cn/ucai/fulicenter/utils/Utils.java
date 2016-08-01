@@ -18,7 +18,7 @@ import java.util.List;
 
 import cn.ucai.fulicenter.bean.Pager;
 import cn.ucai.fulicenter.bean.Result;
-import cn.ucai.fulicenter.widget.I;
+import cn.ucai.fulicenter.I;
 
 /**
  * Created by clawpo on 16/3/28.

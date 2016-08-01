@@ -38,7 +38,7 @@ import cn.ucai.fulicenter.bean.UserAvatar;
 import cn.ucai.fulicenter.utils.OkHttpUtils2;
 import cn.ucai.fulicenter.utils.UserUtils;
 import cn.ucai.fulicenter.utils.Utils;
-import cn.ucai.fulicenter.widget.I;
+import cn.ucai.fulicenter.I;
 
 public class AddContactActivity extends BaseActivity{
 	final static String TAG = AddContactActivity.class.getSimpleName();

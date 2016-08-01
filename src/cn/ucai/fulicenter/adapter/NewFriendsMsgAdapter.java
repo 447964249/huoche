@@ -32,7 +32,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.easemob.chat.EMChatManager;
-import com.easemob.chat.EMGroupManager;
 
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.Result;
@@ -42,7 +41,7 @@ import cn.ucai.fulicenter.domain.InviteMessage;
 import cn.ucai.fulicenter.utils.OkHttpUtils2;
 import cn.ucai.fulicenter.utils.UserUtils;
 import cn.ucai.fulicenter.utils.Utils;
-import cn.ucai.fulicenter.widget.I;
+import cn.ucai.fulicenter.I;
 
 public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
     final static String TAG = "NewFriendsMsgAdapter";
