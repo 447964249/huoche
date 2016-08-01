@@ -13,6 +13,7 @@
  */
 package cn.ucai.fulicenter.activity;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +24,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -35,6 +37,10 @@ import com.easemob.EMCallBack;
 import cn.ucai.fulicenter.applib.controller.HXSDKHelper;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroupManager;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
 import cn.ucai.fulicenter.Constant;
 import cn.ucai.fulicenter.fulicenter;
 import cn.ucai.fulicenter.DemoHXSDKHelper;
@@ -46,6 +52,7 @@ import cn.ucai.fulicenter.domain.User;
 import cn.ucai.fulicenter.task.DownloadContactListTask;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.OkHttpUtils2;
+import cn.ucai.fulicenter.utils.UserUtils;
 import cn.ucai.fulicenter.utils.Utils;
 import cn.ucai.fulicenter.I;
 
@@ -202,17 +209,36 @@ public class LoginActivity extends BaseActivity {
 								saveUserToDB(user);
 								//远端服务器登录成功，再登录环信服务器
 								loginSuccess(user);
+//								哪来的？？
+ downloadUserAvatarFromAppServer();
 							}
 						} else {
 							pd.dismiss();
 							Toast.makeText(getApplicationContext(),
-									R.string.Login_failed+Utils.getResourceString(LoginActivity.this,result.getRetCode()),
+									R.string.Login_failed,
 									Toast.LENGTH_SHORT).show();
 						}
 					}
 
 					@Override
 					public void onError(String error) {
+
+					}
+				});
+	}
+
+	private void downloadUserAvatarFromAppServer() {
+		final OkHttpUtils2<Message> util = new OkHttpUtils2<Message>();
+		util.url(UserUtils.getUserAvatarPath(fulicenter.getInstance().getUserName()))
+				.targetClass(Message.class)
+				.doInBackground(new Callback() {
+					@Override
+					public void onFailure(Request request, IOException e) {
+
+					}
+
+					@Override
+					public void onResponse(Response response) throws IOException {
 
 					}
 				});

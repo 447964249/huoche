@@ -187,7 +187,7 @@ public class UserUtils {
 				.append(I.AVATAR_TYPE_GROUP_PATH);
 		return path.toString();
 	}*/
-	private static String getUserAvatarPath(String username){
+	public static String getUserAvatarPath(String username){
 		StringBuilder path = new StringBuilder(I.SERVER_ROOT);
 		path.append(I.QUESTION)
 				.append(I.KEY_REQUEST)
