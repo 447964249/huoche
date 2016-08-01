@@ -1,5 +1,8 @@
 package cn.ucai.fulicenter.bean;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonProperty;
+
 import java.io.Serializable;
 import java.util.Arrays;
 
@@ -31,39 +34,33 @@ public class GoodDetailsBean implements Serializable {
     private String goodsName;
     private String goodsEnglishName;
     private String goodsBrief;
+
     private String shopPrice;
     private String currencyPrice;
     private String promotePrice;
     private String rankPrice;
     private String goodsThumb;
+
     private String goodsImg;
     private long addTime;
     private String shareUrl;
+@JsonProperty("ispromote")
+    private Boolean ispromote;
+
     private properties[] propertie;
 
     public properties[] getPropertie() {
         return propertie;
     }
 
-    @Override
-    public String toString() {
-        return "GoodDetailsBean{" +
-                "id=" + id +
-                ", goodsId=" + goodsId +
-                ", catId=" + catId +
-                ", goodsName='" + goodsName + '\'' +
-                ", goodsEnglishName='" + goodsEnglishName + '\'' +
-                ", goodsBrief='" + goodsBrief + '\'' +
-                ", shopPrice='" + shopPrice + '\'' +
-                ", currencyPrice='" + currencyPrice + '\'' +
-                ", promotePrice='" + promotePrice + '\'' +
-                ", rankPrice='" + rankPrice + '\'' +
-                ", goodsThumb='" + goodsThumb + '\'' +
-                ", goodsImg='" + goodsImg + '\'' +
-                ", addTime=" + addTime +
-                ", shareUrl='" + shareUrl + '\'' +
-                ", propertie=" + Arrays.toString(propertie) +
-                '}';
+
+
+    public Boolean getPromote() {
+        return ispromote;
+    }
+@JsonIgnore
+    public void isPromote(Boolean promote) {
+        this.ispromote = promote;
     }
 
     public void setPropertie(properties[] propertie) {
@@ -180,5 +177,27 @@ public class GoodDetailsBean implements Serializable {
 
     public void setShareUrl(String shareUrl) {
         this.shareUrl = shareUrl;
+    }
+
+    @Override
+    public String toString() {
+        return "GoodDetailsBean{" +
+                "id=" + id +
+                ", goodsId=" + goodsId +
+                ", catId=" + catId +
+                ", goodsName='" + goodsName + '\'' +
+                ", goodsEnglishName='" + goodsEnglishName + '\'' +
+                ", goodsBrief='" + goodsBrief + '\'' +
+                ", shopPrice='" + shopPrice + '\'' +
+                ", currencyPrice='" + currencyPrice + '\'' +
+                ", promotePrice='" + promotePrice + '\'' +
+                ", rankPrice='" + rankPrice + '\'' +
+                ", goodsThumb='" + goodsThumb + '\'' +
+                ", goodsImg='" + goodsImg + '\'' +
+                ", addTime=" + addTime +
+                ", shareUrl='" + shareUrl + '\'' +
+                ", promote=" + ispromote +
+                ", propertie=" + Arrays.toString(propertie) +
+                '}';
     }
 }
