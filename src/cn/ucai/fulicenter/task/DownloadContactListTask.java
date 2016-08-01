@@ -39,16 +39,15 @@ public class DownloadContactListTask {
                         Log.e(TAG, "onSuccess:s= " + s);
                         Result result = Utils.getListResultFromJson(s, UserAvatar.class);
                         Log.e(TAG, "result " + result);
+
                         List<UserAvatar> list= (List<UserAvatar>) result.getRetData();
+                        if (list != null && list.size() > 0) {
                         Map<String, UserAvatar> map = fulicenter.getInstance().getUserMap();
                         for (UserAvatar u:list){
                             map.put(u.getMUserName(),u);
                         }
-
-                        if (list != null && list.size() > 0) {
                             Log.e(TAG, "list.size= " +list.size());
                             fulicenter.getInstance().setUserlist(list);
-
                             //发广播
                             context.sendStickyBroadcast(new Intent("update_contact_list"));
                         }
