@@ -51,7 +51,6 @@ public class fulicenterMainActivity extends BaseActivity implements View.OnClick
         mtvCart = (Button) findViewById(R.id.btn_cart);
         mtvpersonal = (Button) findViewById(R.id.btn_personal);
 
-        mParentCart = (RelativeLayout) findViewById(R.id.btn_container_cart);
 
         //mvp = (ViewPager) findViewById(R.id.mvp);
     }
@@ -63,12 +62,12 @@ public class fulicenterMainActivity extends BaseActivity implements View.OnClick
         mtvNewGoods.setOnClickListener(this);
         mtvBoutique.setOnClickListener(this);
         mtvCategory.setOnClickListener(this);
-        mParentCart.setOnClickListener(this);
+
       //  mtvCollect.setOnClickListener(this);
         mtvCart.setOnClickListener(this);
 
 
-       // mtvpersonal.setOnClickListener(this);
+        mtvpersonal.setOnClickListener(this);
 
 
         FragmentManager manager = getSupportFragmentManager();
