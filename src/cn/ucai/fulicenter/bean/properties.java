@@ -26,6 +26,8 @@ public class properties  implements Serializable {
     private String colorImg;
     private String colorUrl;
 
+    private albums [] album;
+
     public albums[] getAlbum() {
         return album;
     }
@@ -48,7 +50,7 @@ public class properties  implements Serializable {
         this.album = album;
     }
 
-    private albums [] album;
+
 
     public int getId() {
         return id;

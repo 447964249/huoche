@@ -25,7 +25,7 @@ public class CartBean  implements Serializable {
     private int count;
 @JsonProperty("isChecked")
     private boolean ischecked;
-    private String goods;
+    private GoodDetailsBean goods;
 
     public int getId() {
         return id;
@@ -68,11 +68,11 @@ public class CartBean  implements Serializable {
         this.ischecked = checked;
     }
 
-    public String getGoods() {
+    public GoodDetailsBean getGoods() {
         return goods;
     }
 
-    public void setGoods(String goods) {
+    public void setGoods(GoodDetailsBean goods) {
         this.goods = goods;
     }
 
