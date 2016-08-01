@@ -19,7 +19,7 @@ import cn.ucai.fulicenter.R;
 
 
 
-public class fulicenterMain extends BaseActivity implements View.OnClickListener {
+public class fulicenterMainActivity extends BaseActivity implements View.OnClickListener {
 
     RelativeLayout mParentCart;
     //mNewGoodsFragment,mBoutiqueFragment,mCategoryFragment,mCollectFragment,mCartFragment,mContactFragment
