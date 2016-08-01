@@ -158,7 +158,7 @@ public class UserUtils {
 	/**
 	 * 设置群组头像改
 	 */
-	public static void setAppgroupAvatar(Context context, String hxid, ImageView imageView) {
+	/*public static void setAppgroupAvatar(Context context, String hxid, ImageView imageView) {
 		String path = "";
 		//User user = getUserInfo(username);
 		if(path != null &&hxid!= null){
@@ -167,14 +167,14 @@ public class UserUtils {
 		}else{
 			Picasso.with(context).load(R.drawable.group_icon).into(imageView);
 		}
-	}
+	}*/
 
 	/**
 	 * 设置群组头像路径
-	 * @param hxid
+	 * @param
 	 * @return
      */
-	private static String getgroupAvatarPath(String hxid){
+	/*private static String getgroupAvatarPath(String hxid){
 		StringBuilder path = new StringBuilder(I.SERVER_ROOT);
 		path.append(I.QUESTION)
 				.append(I.KEY_REQUEST)
@@ -189,7 +189,7 @@ public class UserUtils {
 				.append(I.EQU)
 				.append(I.AVATAR_TYPE_GROUP_PATH);
 		return path.toString();
-	}
+	}*/
 	private static String getUserAvatarPath(String username){
 		StringBuilder path = new StringBuilder(I.SERVER_ROOT);
 		path.append(I.QUESTION)
@@ -216,7 +216,7 @@ public class UserUtils {
 
 	}
 
-	public static void setAppMemberNick(String hxId, String username, TextView textView) {
+	/*public static void setAppMemberNick(String hxId, String username, TextView textView) {
 		MemberUserAvatar memberUserInfo = getAppMemberInfo(hxId, username);
 		if (memberUserInfo != null && memberUserInfo.getMUserNick() != null) {
 			textView.setText(memberUserInfo.getMUserNick());
@@ -224,8 +224,8 @@ public class UserUtils {
 			textView.setText(username);
 		}
 
-	}
-	public  static MemberUserAvatar getAppMemberInfo(String hxid,String username){
+	}*/
+	/*public  static MemberUserAvatar getAppMemberInfo(String hxid,String username){
 		MemberUserAvatar member = null;
 		HashMap<String, MemberUserAvatar> members =
 				fulicenter.getInstance().getMemberMap().get(hxid);
@@ -235,5 +235,5 @@ public class UserUtils {
 			member = members.get(username);
 		}
 		return member;
-	}
+	}*/
 }
