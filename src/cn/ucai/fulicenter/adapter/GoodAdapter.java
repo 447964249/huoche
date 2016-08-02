@@ -107,11 +107,13 @@ public class GoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             mGoodlist.clear();
         }
         mGoodlist.addAll(list);
+        soryByAddTime();
         notifyDataSetChanged();
     }
 
     public void addItem(ArrayList<NewGoodBean> goodBeanArrList) {
         mGoodlist.addAll(goodBeanArrList);
+        soryByAddTime();
         notifyDataSetChanged();
     }
 
@@ -129,13 +131,13 @@ public class GoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             tvGoodPrice = (TextView) itemView.findViewById(R.id.tv_good_price);
         }
     }
-   /* private void soryByAddTime(){
+    private void soryByAddTime(){
         Collections.sort(mGoodlist, new Comparator<NewGoodBean>() {
             @Override
             public int compare(NewGoodBean goodlefe, NewGoodBean goodRight) {
-                goodlefe.getAddTime()
-                return ;
+                return (int) (Long.valueOf(goodRight.getAddTime()) - Long.valueOf(goodlefe.getAddTime()));
+
             }
         });
-    }*/
+    }
 }
