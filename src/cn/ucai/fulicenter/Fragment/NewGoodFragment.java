@@ -36,8 +36,9 @@ public class NewGoodFragment extends Fragment {
 
     GoodAdapter mAdapter;
     List<NewGoodBean> mGoodList;
-    int pageId = 0;
     TextView tvHint;
+    int pageId = 0;
+    int action = I.ACTION_DOWNLOAD;
 
     public NewGoodFragment() {
         // Required empty public constructor
@@ -80,9 +81,8 @@ public class NewGoodFragment extends Fragment {
                 if (newState == RecyclerView.SCROLL_STATE_IDLE
                         && lastItemPosition == mAdapter.getItemCount() - 1) {
                     if (mAdapter.isMore()) {
-
+                        action = I.ACTION_PULL_UP;
                         pageId += I.PAGE_SIZE_DEFAULT;
-                        Log.e(TAG, "pageId: "+pageId);
                         indate();
                     }
                 }
@@ -100,8 +100,11 @@ public class NewGoodFragment extends Fragment {
         mswipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                action = I.ACTION_PULL_DOWN;
                 tvHint.setVisibility(View.VISIBLE);
-                pageId = 1;
+                mswipeRefreshLayout.setRefreshing(true);
+                pageId = 0;
+
                 indate();
             }
         });
@@ -120,11 +123,20 @@ public class NewGoodFragment extends Fragment {
                     if (result != null) {
                         Log.e(TAG, "result:length " + result.length);
                         ArrayList<NewGoodBean> goodBeanArrList = Utils.array2List(result);
-                        mAdapter.initDate(goodBeanArrList);
+                        if (action == I.ACTION_DOWNLOAD || action == I.ACTION_PULL_DOWN) {
+
+                            mAdapter.initDate(goodBeanArrList);
+                        } else {
+                            mAdapter.addItem(goodBeanArrList);
+                        }
+
                         if (goodBeanArrList.size() < I.PAGE_SIZE_DEFAULT) {
                             mAdapter.setMore(false);
                             mAdapter.setFootstring(getResources().getString(R.string.no_more));
                         }
+                    } else {
+                        mAdapter.setMore(false);
+                        mAdapter.setFootstring(getResources().getString(R.string.no_more));
                     }
                 }
                 @Override

@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import cn.ucai.fulicenter.I;
@@ -34,6 +36,7 @@ public class GoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     public void setFootstring(String footstring) {
         this.footstring = footstring;
+        notifyDataSetChanged();
     }
 
     public boolean isMore() {
@@ -107,6 +110,11 @@ public class GoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         notifyDataSetChanged();
     }
 
+    public void addItem(ArrayList<NewGoodBean> goodBeanArrList) {
+        mGoodlist.addAll(goodBeanArrList);
+        notifyDataSetChanged();
+    }
+
     class GoodViewHolder extends  RecyclerView.ViewHolder{
         LinearLayout layout;
         ImageView imageThumb;
@@ -121,4 +129,13 @@ public class GoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             tvGoodPrice = (TextView) itemView.findViewById(R.id.tv_good_price);
         }
     }
+   /* private void soryByAddTime(){
+        Collections.sort(mGoodlist, new Comparator<NewGoodBean>() {
+            @Override
+            public int compare(NewGoodBean goodlefe, NewGoodBean goodRight) {
+                goodlefe.getAddTime()
+                return ;
+            }
+        });
+    }*/
 }
