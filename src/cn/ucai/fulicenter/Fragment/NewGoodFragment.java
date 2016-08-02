@@ -91,7 +91,14 @@ public class NewGoodFragment extends Fragment {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+                int f = mGridLayoutManager.findFirstVisibleItemPosition();
+                int l = mGridLayoutManager.findLastVisibleItemPosition();
+                Log.e(TAG, "F"+f+"L"+l);
                 lastItemPosition = mGridLayoutManager.findLastVisibleItemPosition();
+                mswipeRefreshLayout.setEnabled(mGridLayoutManager.findFirstVisibleItemPosition()==0);
+                if (f == -1 || l == -1) {
+                    lastItemPosition = mAdapter.getItemCount() - 1;
+                }
             }
         });
     }
