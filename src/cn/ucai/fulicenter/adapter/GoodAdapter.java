@@ -30,14 +30,14 @@ public class GoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     public GoodAdapter(Context context, List<NewGoodBean> list) {
         mcontext = context;
         mGoodlist = new ArrayList<NewGoodBean>();
-        mGoodlist .addAll(list);
+        mGoodlist.addAll(list);
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
        ViewHolder holder = null;
         LayoutInflater infla = LayoutInflater.from(mcontext);
-        holder = new GoodViewHolder(infla.inflate(R.layout.item_good, null, false));
+        holder = new GoodViewHolder(infla.inflate(R.layout.item_good, parent, false));
         return holder;
     }
 
@@ -56,10 +56,20 @@ public class GoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     public int getItemCount() {
         return mGoodlist.size();
     }
+
+    public void initDate(ArrayList<NewGoodBean> list) {
+        if (mGoodlist != null) {
+            mGoodlist.clear();
+        }
+        mGoodlist.addAll(list);
+        notifyDataSetChanged();
+    }
+
     class GoodViewHolder extends  RecyclerView.ViewHolder{
         LinearLayout layout;
         ImageView imageThumb;
-        TextView tvGoodname, tvGoodPrice;
+        TextView tvGoodname,
+                tvGoodPrice;
 
         public GoodViewHolder(View itemView) {
             super(itemView);

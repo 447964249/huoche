@@ -3,7 +3,7 @@ package cn.ucai.fulicenter;
 import cn.ucai.fulicenter.widget.D;
 
 public interface I {
-	String SERVER_ROOT = "http://10.0.2.2:1614/ FuLiCenterServer/Server";
+	String SERVER_ROOT = "http://10.0.2.2:1614/FuLiCenterServer/Server";
 	String QUESTION ="?";
    public static final String FILE_NAME="file_name";
 
@@ -433,6 +433,7 @@ public interface I {
     /** 从服务端查询精选首页的数据*/
     String REQUEST_FIND_BOUTIQUES="find_boutiques";
     /** 从服务端查询新品或精选的商品*/
+	//											find_new_boutique_goods
     String REQUEST_FIND_NEW_BOUTIQUE_GOODS="find_new_boutique_goods";
 
     /** 从服务端下载tb_category_parent表的数据*/

@@ -3,24 +3,22 @@ package cn.ucai.fulicenter.activity;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import cn.ucai.fulicenter.Fragment.NewGoodFragment;
 import cn.ucai.fulicenter.R;
 
 
 
 public class fulicenterMainActivity extends BaseActivity implements View.OnClickListener {
-
+    NewGoodFragment mnowGoodFragment;
     RelativeLayout mParentCart;
     //mNewGoodsFragment,mBoutiqueFragment,mCategoryFragment,mCollectFragment,mCartFragment,mContactFragment
    /* NewGoodsFragment mNewGoodsFragment;
@@ -51,8 +49,14 @@ public class fulicenterMainActivity extends BaseActivity implements View.OnClick
         mtvCart = (Button) findViewById(R.id.btn_cart);
         mtvpersonal = (Button) findViewById(R.id.btn_personal);
 
+        mnowGoodFragment = new NewGoodFragment();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_con,mnowGoodFragment)
+              //  .add(R.id.fragment_container, contactListFragment)
+               // .hide(contactListFragment)
+                .show(mnowGoodFragment)
+                .commit();
 
-        //mvp = (ViewPager) findViewById(R.id.mvp);
     }
 
 
