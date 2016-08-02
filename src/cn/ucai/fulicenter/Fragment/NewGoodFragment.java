@@ -28,7 +28,7 @@ import cn.ucai.fulicenter.utils.Utils;
  * A simple {@link Fragment} subclass.
  */
 public class NewGoodFragment extends Fragment {
-    private static final String TAG ="NewGoodFragment" ;
+    private static final String TAG = "NewGoodFragment";
     fulicenterMainActivity mcontext;
     SwipeRefreshLayout mswipeRefreshLayout;
     RecyclerView mRecyclerView;
@@ -36,8 +36,9 @@ public class NewGoodFragment extends Fragment {
 
     GoodAdapter mAdapter;
     List<NewGoodBean> mGoodList;
-    int pageId=1;
+    int pageId = 0;
     TextView tvHint;
+
     public NewGoodFragment() {
         // Required empty public constructor
     }
@@ -51,7 +52,7 @@ public class NewGoodFragment extends Fragment {
         mcontext = (fulicenterMainActivity) getContext();
         View layout = View.inflate(mcontext, R.layout.fragment_now_good, null);
 
-        mGoodList=new ArrayList<NewGoodBean>();
+        mGoodList = new ArrayList<NewGoodBean>();
 
         initView(layout);
         indate();
@@ -62,6 +63,34 @@ public class NewGoodFragment extends Fragment {
     private void setListener() {
         //下拉刷新
         setPullDownRefreshListener();
+        //上拉刷新
+        setPullUpRefreshListener();
+    }
+
+    private void setPullUpRefreshListener() {
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            int lastItemPosition;
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                int a1 = RecyclerView.SCROLL_STATE_DRAGGING;
+                int b0 = RecyclerView.SCROLL_STATE_IDLE;
+                int c2 = RecyclerView.SCROLL_STATE_SETTLING;
+                if (newState == RecyclerView.SCROLL_STATE_IDLE
+                        && lastItemPosition == mAdapter.getItemCount() - 1) {
+                    pageId += I.PAGE_SIZE_DEFAULT;
+                    Log.e(TAG, "pageId: "+pageId);
+                    indate();
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                lastItemPosition = mGridLayoutManager.findLastVisibleItemPosition();
+            }
+        });
     }
 
     private void setPullDownRefreshListener() {
@@ -76,42 +105,46 @@ public class NewGoodFragment extends Fragment {
     }
 
     private void indate() {
-        finNewGoodList(new OkHttpUtils2.OnCompleteListener<NewGoodBean[]>() {
-            @Override
-            public void onSuccess(NewGoodBean[] result) {
-                Log.e(TAG, "result: "+result);
-                tvHint.setVisibility(View.GONE);
-                mswipeRefreshLayout.setRefreshing(false);
-                if (result != null) {
-                    Log.e(TAG, "result:length "+result.length);
-                    ArrayList<NewGoodBean> goodBeanArrList = Utils.array2List(result);
-                    mAdapter.initDate(goodBeanArrList);
-
+        try {
+            finNewGoodList(new OkHttpUtils2.OnCompleteListener<NewGoodBean[]>() {
+                @Override
+                public void onSuccess(NewGoodBean[] result) {
+                    Log.e(TAG, "result: " + result);
+                    tvHint.setVisibility(View.GONE);
+                    mswipeRefreshLayout.setRefreshing(false);
+                    if (result != null) {
+                        Log.e(TAG, "result:length " + result.length);
+                        ArrayList<NewGoodBean> goodBeanArrList = Utils.array2List(result);
+                        mAdapter.initDate(goodBeanArrList);
+                    }
                 }
-            }
+                @Override
+                public void onError(String error) {
+                    Log.e(TAG, "eeeeeeeeeeeeeeeeeeeee ");
+                    tvHint.setVisibility(View.GONE);
+                    mswipeRefreshLayout.setRefreshing(false);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
 
-            @Override
-            public void onError(String error) {
-                Log.e(TAG, "eeeeeeeeeeeeeeeeeeeee ");
-
-                tvHint.setVisibility(View.GONE);
-                mswipeRefreshLayout.setRefreshing(false);
-            }
-        });
+        }
     }
-private void finNewGoodList(OkHttpUtils2.OnCompleteListener<NewGoodBean[]>listener){
-    OkHttpUtils2<NewGoodBean[]> utils = new OkHttpUtils2<NewGoodBean[]>();
-    utils.setRequestUrl(I.REQUEST_FIND_NEW_BOUTIQUE_GOODS).addParam(I.NewAndBoutiqueGood.CAT_ID,String.valueOf(I.CAT_ID))
-            .addParam(I.PAGE_ID,String.valueOf(pageId))
-            .addParam(I.PAGE_SIZE,String.valueOf(I.PAGE_SIZE_DEFAULT))
-            .targetClass(NewGoodBean[].class)
-            .execute(listener);
 
-}
+    private void finNewGoodList(OkHttpUtils2.OnCompleteListener<NewGoodBean[]> listener) {
+        OkHttpUtils2<NewGoodBean[]> utils = new OkHttpUtils2<NewGoodBean[]>();
+        utils.setRequestUrl(I.REQUEST_FIND_NEW_BOUTIQUE_GOODS).addParam(I.NewAndBoutiqueGood.CAT_ID, String.valueOf(I.CAT_ID))
+                .addParam(I.PAGE_ID, String.valueOf(pageId))
+                .addParam(I.PAGE_SIZE, String.valueOf(I.PAGE_SIZE_DEFAULT))
+                .targetClass(NewGoodBean[].class)
+                .execute(listener);
+
+    }
+
     private void initView(View layout) {
         tvHint = (TextView) layout.findViewById(R.id.tv_refresh_hint);
 
-        mswipeRefreshLayout =(SwipeRefreshLayout) layout.findViewById(R.id.srl_new_good);
+        mswipeRefreshLayout = (SwipeRefreshLayout) layout.findViewById(R.id.srl_new_good);
         mswipeRefreshLayout.setColorSchemeColors(
                 R.color.google_blue,
                 R.color.google_yellow,
