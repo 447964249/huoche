@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,7 @@ public class NewGoodFragment extends Fragment {
     GoodAdapter mAdapter;
     List<NewGoodBean> mGoodList;
     int pageId=1;
-
+    TextView tvHint;
     public NewGoodFragment() {
         // Required empty public constructor
     }
@@ -54,7 +55,24 @@ public class NewGoodFragment extends Fragment {
 
         initView(layout);
         indate();
+        setListener();
         return layout;
+    }
+
+    private void setListener() {
+        //下拉刷新
+        setPullDownRefreshListener();
+    }
+
+    private void setPullDownRefreshListener() {
+        mswipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                tvHint.setVisibility(View.VISIBLE);
+                pageId = 1;
+                indate();
+            }
+        });
     }
 
     private void indate() {
@@ -62,6 +80,8 @@ public class NewGoodFragment extends Fragment {
             @Override
             public void onSuccess(NewGoodBean[] result) {
                 Log.e(TAG, "result: "+result);
+                tvHint.setVisibility(View.GONE);
+                mswipeRefreshLayout.setRefreshing(false);
                 if (result != null) {
                     Log.e(TAG, "result:length "+result.length);
                     ArrayList<NewGoodBean> goodBeanArrList = Utils.array2List(result);
@@ -73,6 +93,9 @@ public class NewGoodFragment extends Fragment {
             @Override
             public void onError(String error) {
                 Log.e(TAG, "eeeeeeeeeeeeeeeeeeeee ");
+
+                tvHint.setVisibility(View.GONE);
+                mswipeRefreshLayout.setRefreshing(false);
             }
         });
     }
@@ -86,6 +109,8 @@ private void finNewGoodList(OkHttpUtils2.OnCompleteListener<NewGoodBean[]>listen
 
 }
     private void initView(View layout) {
+        tvHint = (TextView) layout.findViewById(R.id.tv_refresh_hint);
+
         mswipeRefreshLayout =(SwipeRefreshLayout) layout.findViewById(R.id.srl_new_good);
         mswipeRefreshLayout.setColorSchemeColors(
                 R.color.google_blue,
