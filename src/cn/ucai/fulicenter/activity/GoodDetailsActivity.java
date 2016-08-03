@@ -6,10 +6,14 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.View.FlowIndicator;
 import cn.ucai.fulicenter.View.SlideAutoLoopView;
+import cn.ucai.fulicenter.bean.GoodDetailsBean;
+import cn.ucai.fulicenter.utils.OkHttpUtils2;
 import cn.ucai.fulicenter.widget.D;
 
 /**
@@ -17,6 +21,9 @@ import cn.ucai.fulicenter.widget.D;
  */
 public class GoodDetailsActivity extends BaseActivity {
     private static final String TAG ="GoodDetailsActivity" ;
+
+    GoodDetailsActivity mContext;
+
     ImageView ivShare,
             ivCollect,
             ivCart;
@@ -36,12 +43,48 @@ public class GoodDetailsActivity extends BaseActivity {
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
         setContentView(R.layout.activity_good_details);
+        mContext = this;
         initView();
         initData();
     }
     private void initData() {
         mgoodId = getIntent().getIntExtra(D.GoodDetails.KEY_GOODS_ID,0);
         Log.e(TAG,"mGoodId="+mgoodId);
+        if(mgoodId>0){
+            getGoodDetailsByGoodId(new OkHttpUtils2.OnCompleteListener<GoodDetailsBean>() {
+                @Override
+                public void onSuccess(GoodDetailsBean result) {
+                    Log.e(TAG,"result="+result);
+                    if(result!=null){
+                        showGoodDetails(result);
+                    }
+                }
+                @Override
+                public void onError(String error) {
+                    Log.e(TAG,"error="+error);
+                    finish();
+                    Toast.makeText(mContext,"获取商品详情数据失败！",Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else{
+            finish();
+            Toast.makeText(mContext,"获取商品详情数据失败！",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void showGoodDetails(GoodDetailsBean detail) {
+        tvGoodEnglishName.setText(detail.getGoodsEnglishName());
+        tvGoodName.setText(detail.getGoodsName());
+        tvGoodPriceCurrent.setText(detail.getCurrencyPrice());
+        tvGoodPriceShop.setText(detail.getShopPrice());
+    }
+
+    private void getGoodDetailsByGoodId(OkHttpUtils2.OnCompleteListener<GoodDetailsBean> listener){
+        OkHttpUtils2<GoodDetailsBean> utils = new OkHttpUtils2<GoodDetailsBean>();
+        utils.setRequestUrl(I.REQUEST_FIND_GOOD_DETAILS)
+                .addParam(D.GoodDetails.KEY_GOODS_ID,String.valueOf(mgoodId))
+                .targetClass(GoodDetailsBean.class)
+                .execute(listener);
     }
 
     private void initView() {
