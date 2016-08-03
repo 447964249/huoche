@@ -37,7 +37,7 @@ public final class D {
 		public static final String KEY_GOODS_THUMB = "goods_thumb";
 		public static final String KEY_SHOP_PRICE = "shop_price";
 		public static final String KEY_PROPERTIES = "properties";
-		public static final String KEY_ALBUMS = "albums";
+		public static final String KEY_ALBUMS = "AlbumsBean";
 	}
 	
 	public static final class Property {

@@ -26,10 +26,10 @@ public class properties  implements Serializable {
     private String colorImg;
     private String colorUrl;
 
-    private albums [] album;
+    private AlbumsBean[] albums;
 
-    public albums[] getAlbum() {
-        return album;
+    public AlbumsBean[] getAlbums() {
+        return albums;
     }
 
     @Override
@@ -42,12 +42,12 @@ public class properties  implements Serializable {
                 ", colorCode='" + colorCode + '\'' +
                 ", colorImg='" + colorImg + '\'' +
                 ", colorUrl='" + colorUrl + '\'' +
-                ", album=" + Arrays.toString(album) +
+                ", album=" + Arrays.toString(albums) +
                 '}';
     }
 
-    public void setAlbum(albums[] album) {
-        this.album = album;
+    public void setAlbums(AlbumsBean[] album) {
+        this.albums = album;
     }
 
 

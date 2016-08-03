@@ -10,8 +10,10 @@ import android.widget.Toast;
 
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.View.DisplayUtils;
 import cn.ucai.fulicenter.View.FlowIndicator;
 import cn.ucai.fulicenter.View.SlideAutoLoopView;
+import cn.ucai.fulicenter.bean.AlbumsBean;
 import cn.ucai.fulicenter.bean.GoodDetailsBean;
 import cn.ucai.fulicenter.utils.OkHttpUtils2;
 import cn.ucai.fulicenter.widget.D;
@@ -23,6 +25,7 @@ public class GoodDetailsActivity extends BaseActivity {
     private static final String TAG ="GoodDetailsActivity" ;
 
     GoodDetailsActivity mContext;
+    GoodDetailsBean mGoodDetail;
 
     ImageView ivShare,
             ivCollect,
@@ -56,7 +59,9 @@ public class GoodDetailsActivity extends BaseActivity {
                 public void onSuccess(GoodDetailsBean result) {
                     Log.e(TAG,"result="+result);
                     if(result!=null){
-                        showGoodDetails(result);
+                       // showGoodDetails(result);
+                        mGoodDetail = result;
+                         showGoodDetails();
                     }
                 }
                 @Override
@@ -72,11 +77,34 @@ public class GoodDetailsActivity extends BaseActivity {
         }
     }
 
-    private void showGoodDetails(GoodDetailsBean detail) {
-        tvGoodEnglishName.setText(detail.getGoodsEnglishName());
-        tvGoodName.setText(detail.getGoodsName());
-        tvGoodPriceCurrent.setText(detail.getCurrencyPrice());
-        tvGoodPriceShop.setText(detail.getShopPrice());
+    private void showGoodDetails() {
+        tvGoodEnglishName.setText(mGoodDetail.getGoodsEnglishName());
+        tvGoodName.setText(mGoodDetail.getGoodsName());
+        tvGoodPriceCurrent.setText(mGoodDetail.getCurrencyPrice());
+        tvGoodPriceShop.setText(mGoodDetail.getShopPrice());
+        //工具类，开始图片轮播
+        mSlideAutoLoopView.startPlayLoop(mFlowIndicator,
+                getAlbumImageUrl(),getAlbumImageSize());
+        wvGoodBrief.loadDataWithBaseURL(null,mGoodDetail.getGoodsBrief(),D.TEXT_HTML,D.UTF_8,null);
+    }
+
+    private String[] getAlbumImageUrl() {
+        String[] albumImageUrl = new String[]{};
+        if(mGoodDetail.getProperties()!=null && mGoodDetail.getProperties().length>0){
+            AlbumsBean[] albums = mGoodDetail.getProperties()[0].getAlbums();
+            albumImageUrl = new String[albums.length];
+            for (int i=0;i<albumImageUrl.length;i++){
+                albumImageUrl[i] = albums[i].getImgUrl();
+            }
+        }
+        return albumImageUrl;
+    }
+
+    private int getAlbumImageSize() {
+        if(mGoodDetail.getProperties()!=null && mGoodDetail.getProperties().length>0){
+            return mGoodDetail.getProperties()[0].getAlbums().length;
+        }
+        return 0;
     }
 
     private void getGoodDetailsByGoodId(OkHttpUtils2.OnCompleteListener<GoodDetailsBean> listener){
@@ -88,6 +116,7 @@ public class GoodDetailsActivity extends BaseActivity {
     }
 
     private void initView() {
+        DisplayUtils.initBack(mContext);
         ivShare = (ImageView) findViewById(R.id.iv_good_share);
         ivCollect = (ImageView) findViewById(R.id.iv_good_collect);
         ivCart = (ImageView) findViewById(R.id.iv_good_cart);
