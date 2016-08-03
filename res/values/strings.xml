@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+
     <string name="app_name">FuLiCenter-AS</string>
     <string name="text_ack_msg">Read</string>
     <string name="text_delivered_msg">Delivered</string>
@@ -200,8 +200,8 @@
     <string name="temporary_does_not">Currently the video size greater than 10M is not supported!</string>
     <string name="Video_footage">Video record</string>
     <string name="User_name_cannot_be_empty">User name cannot be empty!</string>
-     <string name="Nick_name_cannot_be_empty">Nick name cannot be empty!</string>
-    
+    <string name="Nick_name_cannot_be_empty">Nick name cannot be empty!</string>
+
     <string name="User_name_cannot_be_wd">user name can be num,word！</string>
     <string name="Password_cannot_be_empty">Password cannot be empty!</string>
     <string name="please_set_the_current">"Please set the current user's nickname \ n to ios offline push not userid but Nick, see comments"</string>
@@ -272,7 +272,7 @@
     <string name="dismiss_group">Dismiss group</string>
     <string name="add_public_group_chat">Add public group</string>
     <string name="gorup_not_found">Can not find this group</string>
-    <string name= "no_more_messages">no more messages</string>
+    <string name="no_more_messages">no more messages</string>
     <string name="join_public_group">Join public group</string>
     <string name="chatroom_allow_owner_leave">Allow chatroom owner leave</string>
     <string name="group_id">Group ID</string>
@@ -311,7 +311,7 @@
     <string name="Add_buddy_failed">add buddy failed</string>
     <string name="Group_name_existed">Group name existed</string>
     <string name="photo">photo</string>
-     <string name="title_activity_good_details">GoodDetailsActivity</string>
+    <string name="title_activity_good_details">GoodDetailsActivity</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_boutique_child">BoutiqueChildActivity</string>
@@ -321,7 +321,7 @@
     <string name="title_activity_buy">BuyActivity</string>
     <string name="near_people_hint">See nearby people\'s function will get your location information, your location information will be kept for a period of time. Through the list of the top right corner to remove functions can be manually remove location information at any time.</string>
     <string name="msg_900">msg:connection success</string>
-   <!-- 支付的字符串资源 -->
+    <!-- 支付的字符串资源 -->
     <string name="title_activity_pay">支付</string>
     <string name="title_activity_pay_sucessed">支付成功</string>
     <string name="title_activity_pay_filed">支付失败</string>
@@ -372,7 +372,11 @@
     <string name="msg_503">msg:location update success</string>
     <string name="msg_504">msg:location update fail</string>
     <string name="msg_999">msg:unknow</string>
-       <string name="user_qrcode">user qrcode</string>
+    <string name="user_qrcode">user qrcode</string>
     <string name="load_more">load_more。。。</string>
     <string name="no_more">no_more。。。</string>
+    <string name="good_details">goods_details</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
