@@ -92,7 +92,7 @@ public class GoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             mGoodViewHolder = (GoodViewHolder) holder;
             final NewGoodBean good = mGoodlist.get(position);
          //   mGoodViewHolder.imageThumb.setImageURI();
-            ImageUtils.setGoodthumb(mcontext,mGoodViewHolder.imageThumb,good.getGoodsThumb());
+            ImageUtils.setGoodImage(mcontext,mGoodViewHolder.imageThumb,good.getGoodsThumb());
             mGoodViewHolder.tvGoodname.setText(good.getGoodsName());
             mGoodViewHolder.tvGoodPrice.setText(good.getCurrencyPrice());
             mGoodViewHolder.layout.setOnClickListener(new OnClickListener() {

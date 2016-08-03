@@ -48,7 +48,7 @@ public class ImageUtils {
         EMLog.d("msg", "thum image path:" + path);
         return path;
     }
-	public  static void setGoodthumb(Context context, ImageView imageView,String thmub){
+	public  static void setGoodImage(Context context, ImageView imageView,String thmub){
 		String url = I.DOWNLOAD_BOUTIQUE_IMG_URL + thmub;
 		Picasso.with(context).load(url).placeholder(R.drawable.nopic).into(imageView);
 	}
