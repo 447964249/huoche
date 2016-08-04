@@ -1,6 +1,7 @@
 package cn.ucai.fulicenter.adapter;
 
         import android.content.Context;
+        import android.content.Intent;
         import android.support.v7.widget.RecyclerView;
         import android.support.v7.widget.RecyclerView.ViewHolder;
         import android.view.LayoutInflater;
@@ -15,9 +16,12 @@ package cn.ucai.fulicenter.adapter;
 
         import cn.ucai.fulicenter.I;
         import cn.ucai.fulicenter.R;
+        import cn.ucai.fulicenter.activity.BoutiqueDetailsActivity;
+        import cn.ucai.fulicenter.activity.GoodDetailsActivity;
         import cn.ucai.fulicenter.bean.BoutiqueBean;
         import cn.ucai.fulicenter.utils.ImageUtils;
         import cn.ucai.fulicenter.View.FooterViewHolder;
+        import cn.ucai.fulicenter.widget.D;
 
 /**
  * Created by clawpo on 16/8/1.
@@ -72,13 +76,15 @@ public class BoutiqueAdapter extends RecyclerView.Adapter<ViewHolder> {
             mBoutiqueViewHolder.tvTitle.setText(boutique.getTitle());
             mBoutiqueViewHolder.tvName.setText(boutique.getName());
             mBoutiqueViewHolder.tvDesc.setText(boutique.getDescription());
-//            mBoutiqueViewHolder.layout.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    mContext.startActivity(new Intent(mContext, GoodDetailsActivity.class)
-//                    .putExtra(D.GoodDetails.KEY_GOODS_ID,good.getGoodsId()));
-//                }
-//            });
+            mBoutiqueViewHolder.layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mContext.startActivity(new Intent(mContext, BoutiqueDetailsActivity.class)
+                    .putExtra(D.Boutique.KEY_GOODS_ID,boutique.getId())
+                    .putExtra("s",boutique.getName()));
+
+                }
+            });
         }
         if(holder instanceof FooterViewHolder){
             mFooterViewHolder = (FooterViewHolder) holder;
