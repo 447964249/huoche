@@ -52,5 +52,12 @@ public class ImageUtils {
 		String url = I.DOWNLOAD_BOUTIQUE_IMG_URL + thmub;
 		Picasso.with(context).load(url).placeholder(R.drawable.nopic).into(imageView);
 	}
-	
+	public static void setGroupCAtegoryImage(Context context,ImageView img,String imgurl) {
+		String url = I.REQUEST_DOWNLOAD_CATEGORY_GROUP_IMAGE_URL + imgurl;
+		Picasso.with(context).load(url).placeholder(R.drawable.nopic).into(img);
+	}
+	public static void setchildCAtegoryImage(Context context,ImageView img,String imgurl) {
+		String url = I.REQUEST_DOWNLOAD_CATEGORY_CHILD_IMAGE + imgurl;
+		Picasso.with(context).load(url).placeholder(R.drawable.nopic).into(img);
+	}
 }
