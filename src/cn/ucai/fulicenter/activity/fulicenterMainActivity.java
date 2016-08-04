@@ -3,6 +3,7 @@ package cn.ucai.fulicenter.activity;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
@@ -12,34 +13,44 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import cn.ucai.fulicenter.Fragment.BoutiqueFragment;
 import cn.ucai.fulicenter.Fragment.NewGoodFragment;
 import cn.ucai.fulicenter.R;
 
 
 
 public class fulicenterMainActivity extends BaseActivity implements View.OnClickListener {
+    public  static   fulicenterMainActivity content;
+
     NewGoodFragment mnowGoodFragment;
-    RelativeLayout mParentCart;
-    //mNewGoodsFragment,mBoutiqueFragment,mCategoryFragment,mCollectFragment,mCartFragment,mContactFragment
-   /* NewGoodsFragment mNewGoodsFragment;
     BoutiqueFragment mBoutiqueFragment;
-    CategoryFragment mCategoryFragment;
-    CollectFragment mCollectFragment;
-    CartFragment mCartFragment;
+    RelativeLayout mParentCart;
+
+    Fragment mFragment [];
+
+    //mNewGoodsFragment,mBoutiqueFragment,mCategoryFragment,mCollectFragment,mCartFragment,mContactFragment
+    NewGoodFragment mCategoryFragment;
+    NewGoodFragment mCollectFragment;
+    NewGoodFragment mCartFragment;
+    /* NewGoodsFragment mNewGoodsFragment;
+    BoutiqueFragment mBoutiqueFragment;
     ContactFragment mContactFragment;*/
     Drawable drawableTop;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fulicenter_main);
+        content = this;
+
         initView();
+        initFragments();
         setListener();
     }
     Button mtvNewGoods,
             mtvBoutique,
             mtvCategory,
             mtvCart,
-            mtvCollect,
+          //  mtvCollect,
             mtvpersonal;
 
     private void initView() {
@@ -49,13 +60,8 @@ public class fulicenterMainActivity extends BaseActivity implements View.OnClick
         mtvCart = (Button) findViewById(R.id.btn_cart);
         mtvpersonal = (Button) findViewById(R.id.btn_personal);
 
-        mnowGoodFragment = new NewGoodFragment();
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_con,mnowGoodFragment)
-              //  .add(R.id.fragment_container, contactListFragment)
-               // .hide(contactListFragment)
-                .show(mnowGoodFragment)
-                .commit();
+
+
 
     }
 
@@ -80,15 +86,21 @@ public class fulicenterMainActivity extends BaseActivity implements View.OnClick
 
     }
     private void initFragments(){
-
-       /* mNewGoodsFragment = new NewGoodsFragment();
+        mnowGoodFragment = new NewGoodFragment();
         mBoutiqueFragment = new BoutiqueFragment();
-        mCategoryFragment = new CategoryFragment();
-        mCollectFragment = new CollectFragment();
-        mCartFragment = new CartFragment();
-        mContactFragment = new ContactFragment();
-        mFragment = new Fragment[]{mNewGoodsFragment, mBoutiqueFragment, mCategoryFragment, mCollectFragment, mCartFragment, mContactFragment};
-*/
+        mCategoryFragment =new NewGoodFragment();
+        mCollectFragment = new NewGoodFragment();
+        mCartFragment =new NewGoodFragment();
+//        mContactFragment = new ContactFragment();
+        mFragment = new Fragment[]{mnowGoodFragment, mBoutiqueFragment, mCategoryFragment, mCollectFragment, mCartFragment};
+
+        //设置首先直接进入新品页面
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_con,mnowGoodFragment)
+                //  .add(R.id.fragment_container, contactListFragment)
+                // .hide(contactListFragment)
+                .show(mnowGoodFragment)
+                .commit();
     }
     //定义旋转
     private void booleanRotationY(TextView tv){
@@ -113,13 +125,13 @@ public class fulicenterMainActivity extends BaseActivity implements View.OnClick
               //  booleanRotationY(mtvNewGoods);
                 setDrawable(mtvNewGoods, Color.rgb(0xff, 0x66, 0xff), R.drawable.menu_item_new_good_selected);
 //                mNewGoodsFragment = new NewGoodsFragment();
-//                ft.replace(R.id.layoutContent, mNewGoodsFragment).commit();
+                ft.replace(R.id.fragment_con, mnowGoodFragment).commit();
                 break;
             case R.id.btn_boutique:
               //  booleanRotationY(mtvBoutique);
                 setDrawable(mtvBoutique, Color.rgb(0xff, 0x66, 0xff), R.drawable.boutique_selected);
-//                mBoutiqueFragment = new BoutiqueFragment();
-//                ft.replace(R.id.layoutContent, mBoutiqueFragment).commit();
+            //    mBoutiqueFragment = new BoutiqueFragment();
+                ft.replace(R.id.fragment_con, mBoutiqueFragment).commit();
                 break;
             case R.id.btn_category:
               //  booleanRotationY(mtvCategory);

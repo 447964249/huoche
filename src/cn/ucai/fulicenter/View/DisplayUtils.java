@@ -6,6 +6,7 @@ package cn.ucai.fulicenter.View;
 
         import android.app.Activity;
         import android.view.View;
+        import android.widget.TextView;
 
         import cn.ucai.fulicenter.R;
 
@@ -20,5 +21,9 @@ public class DisplayUtils {
                 activity.finish();
             }
         });
+    }
+    public static void initBack(final Activity activity,String Tiltel){
+        initBack(activity);
+        ((TextView)activity.findViewById(R.id.tiltelArea)).setText(Tiltel);
     }
 }
