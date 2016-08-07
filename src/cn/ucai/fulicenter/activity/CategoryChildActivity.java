@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -30,6 +31,11 @@ public class CategoryChildActivity extends BaseActivity {
     SwipeRefreshLayout mswipeRefreshLayout;
     RecyclerView mRecyclerView;
     GridLayoutManager mGridLayoutManager;
+    Button btnprice,
+           addtime;
+    boolean mSortpriceAsc;
+    boolean mSortaddtimeAsc;
+    int sortBy;
 
     GoodAdapter mAdapter;
     List<NewGoodBean> mGoodList;
@@ -50,6 +56,7 @@ public class CategoryChildActivity extends BaseActivity {
 
         mGoodList = new ArrayList<NewGoodBean>();
 
+        sortBy = I.SORT_BY_ADDTIME_ASC;
         initView();
         indate();
         setListener();
@@ -185,7 +192,7 @@ public class CategoryChildActivity extends BaseActivity {
     }
 
     private void initView() {
-                       //  DisplayUtils.initBack(mcontext, getIntent().getStringExtra("s"));
+                       DisplayUtils.initBack(mcontext);
         tvHint = (TextView) findViewById(R.id.tv_refresh_hint);
 
         mswipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.srl_category);
@@ -205,5 +212,17 @@ public class CategoryChildActivity extends BaseActivity {
         mRecyclerView.setAdapter(mAdapter);
     }
 
+    class SortStatusChangedListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.btn_sort_price:
+                    break;
+                case R.id.btn_sort_addtime:
+                    break;
+            }
+        }
+    }
 }
 

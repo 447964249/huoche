@@ -3,10 +3,9 @@ package cn.ucai.fulicenter.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +37,7 @@ public class GoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     GoodViewHolder mGoodViewHolder;
     FooterViewHolder mFooterViewHolder;
     String footstring;
+    int sortBy;
 
     public void setFootstring(String footstring) {
         this.footstring = footstring;
@@ -58,6 +58,14 @@ public class GoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         mcontext = context;
         mGoodlist = new ArrayList<NewGoodBean>();
         mGoodlist.addAll(list);
+        sortBy = I.SORT_BY_ADDTIME_DESC;
+        soryBy();
+    }
+
+    public void setSortBy(int sortBy) {
+        this.sortBy = sortBy;
+        soryBy();
+        notifyDataSetChanged();
     }
 
     @Override
@@ -119,13 +127,13 @@ public class GoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             mGoodlist.clear();
         }
         mGoodlist.addAll(list);
-        soryByAddTime();
+        soryBy();
         notifyDataSetChanged();
     }
 
     public void addItem(ArrayList<NewGoodBean> goodBeanArrList) {
         mGoodlist.addAll(goodBeanArrList);
-        soryByAddTime();
+        soryBy();
         notifyDataSetChanged();
     }
 
@@ -143,11 +151,30 @@ public class GoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             tvGoodPrice = (TextView) itemView.findViewById(R.id.tv_good_price);
         }
     }
-    private void soryByAddTime(){
+    private int getSubStr(String price) {
+        int i = Integer.parseInt(price.substring(1, price.length()));
+        Log.i("main", "getSubStr=" + i);
+        return i;}
+    private void soryBy(){
         Collections.sort(mGoodlist, new Comparator<NewGoodBean>() {
             @Override
             public int compare(NewGoodBean goodlefe, NewGoodBean goodRight) {
-                return (int) (Long.valueOf(goodRight.getAddTime()) - Long.valueOf(goodlefe.getAddTime()));
+                int result = 4;
+                switch (sortBy) {
+                    case I.SORT_BY_PRICE_ASC:
+                        result = (int) (Long.valueOf(getSubStr(goodlefe.getCurrencyPrice())) - (Long.valueOf(getSubStr(goodRight.getCurrencyPrice()))));
+                        break;
+                    case I.SORT_BY_PRICE_DESC:
+                      result  = (int) (int) ((Long.valueOf(getSubStr(goodRight.getCurrencyPrice()))) - Long.valueOf(getSubStr(goodlefe.getCurrencyPrice())));
+                        break;
+                    case I.SORT_BY_ADDTIME_ASC:
+                        result = (int) (Long.valueOf(goodlefe.getAddTime()) - (Long.valueOf(goodRight.getAddTime())));
+                        break;
+                    case I.SORT_BY_ADDTIME_DESC:
+                        result=   (int) (Long.valueOf(goodRight.getAddTime()) - Long.valueOf(goodlefe.getAddTime()));
+                        break;
+                }
+                return result;
 
             }
         });
