@@ -85,6 +85,7 @@ public class CategoryChildActivity extends BaseActivity {
         setPullDownRefreshListener();
         //上拉刷新
         setPullUpRefreshListener();
+       // mCatChildFilterButton.setOnCatFilterClickListener(name,);
     }
 
     private void setPullUpRefreshListener() {
