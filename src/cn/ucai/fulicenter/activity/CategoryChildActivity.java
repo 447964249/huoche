@@ -1,5 +1,6 @@
 package cn.ucai.fulicenter.activity;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -32,7 +33,7 @@ public class CategoryChildActivity extends BaseActivity {
     RecyclerView mRecyclerView;
     GridLayoutManager mGridLayoutManager;
     Button btnprice,
-           addtime;
+            btnaddtime;
     boolean mSortpriceAsc;
     boolean mSortaddtimeAsc;
     int sortBy;
@@ -183,7 +184,7 @@ public class CategoryChildActivity extends BaseActivity {
 
     private void finBoutiqueList(OkHttpUtils2.OnCompleteListener<NewGoodBean[]> listener) {
         OkHttpUtils2<NewGoodBean[]> utils = new OkHttpUtils2<NewGoodBean[]>();
-        utils.setRequestUrl(I.REQUEST_FIND_NEW_BOUTIQUE_GOODS).addParam(I.NewAndBoutiqueGood.CAT_ID, String.valueOf(catId))
+        utils.setRequestUrl(I.REQUEST_FIND_GOODS_DETAILS).addParam(I.NewAndBoutiqueGood.CAT_ID, String.valueOf(catId))
                 .addParam(I.PAGE_ID, String.valueOf(pageId))
                 .addParam(I.PAGE_SIZE, String.valueOf(I.PAGE_SIZE_DEFAULT))
                 .targetClass(NewGoodBean[].class)
@@ -192,7 +193,7 @@ public class CategoryChildActivity extends BaseActivity {
     }
 
     private void initView() {
-                       DisplayUtils.initBack(mcontext);
+        DisplayUtils.initBack(mcontext);
         tvHint = (TextView) findViewById(R.id.tv_refresh_hint);
 
         mswipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.srl_category);
@@ -210,18 +211,43 @@ public class CategoryChildActivity extends BaseActivity {
         mRecyclerView.setLayoutManager(mGridLayoutManager);
         mAdapter = new GoodAdapter(mcontext, mGoodList);
         mRecyclerView.setAdapter(mAdapter);
+        btnprice = (Button) findViewById(R.id.btn_sort_price);
+        btnaddtime = (Button) findViewById(R.id.btn_sort_addtime);
     }
 
     class SortStatusChangedListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
+
+            Drawable right;
             switch (v.getId()) {
                 case R.id.btn_sort_price:
+                    if (mSortpriceAsc) {
+                        sortBy = I.SORT_BY_PRICE_ASC;
+                        right = getResources().getDrawable(R.drawable.arrow_order_up);
+                    } else {
+                        sortBy = I.SORT_BY_PRICE_DESC;
+                        right = getResources().getDrawable(R.drawable.arrow_order_down);
+                    }
+                    mSortpriceAsc = !mSortpriceAsc;
+                    right.setBounds(0, 0, right.getIntrinsicWidth(), right.getIntrinsicHeight());
+                    btnprice.setCompoundDrawablesWithIntrinsicBounds(null, null, right, null);
                     break;
                 case R.id.btn_sort_addtime:
+                    if (mSortaddtimeAsc) {
+                        sortBy = I.SORT_BY_ADDTIME_ASC;
+                        right = getResources().getDrawable(R.drawable.arrow_order_up);
+                    } else {
+                        sortBy = I.SORT_BY_ADDTIME_DESC;
+                        right = getResources().getDrawable(R.drawable.arrow_order_up);
+                    }
+                    mSortaddtimeAsc = !mSortaddtimeAsc;
+                    right.setBounds(0, 0, right.getIntrinsicWidth(), right.getIntrinsicHeight());
+                    btnaddtime.setCompoundDrawablesWithIntrinsicBounds(null, null, right, null);
                     break;
             }
+            mAdapter.setSortBy(sortBy);
         }
     }
 }
