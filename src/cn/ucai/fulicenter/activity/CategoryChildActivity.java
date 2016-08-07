@@ -19,6 +19,7 @@ import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.View.DisplayUtils;
 import cn.ucai.fulicenter.adapter.GoodAdapter;
 import cn.ucai.fulicenter.bean.NewGoodBean;
+import cn.ucai.fulicenter.View.CatChildFilterButton;
 import cn.ucai.fulicenter.utils.OkHttpUtils2;
 import cn.ucai.fulicenter.utils.Utils;
 import cn.ucai.fulicenter.widget.D;
@@ -44,7 +45,7 @@ public class CategoryChildActivity extends BaseActivity {
     int pageId = 0;
     int action = I.ACTION_DOWNLOAD;
     int catId = 0;
-
+    CatChildFilterButton mCatChildFilterButton;
     public CategoryChildActivity() {
         // Required empty public constructor
     }
@@ -211,10 +212,16 @@ public class CategoryChildActivity extends BaseActivity {
         mRecyclerView.setLayoutManager(mGridLayoutManager);
         mAdapter = new GoodAdapter(mcontext, mGoodList);
         mRecyclerView.setAdapter(mAdapter);
+        SortStatusChangedListener s = new SortStatusChangedListener();
         btnprice = (Button) findViewById(R.id.btn_sort_price);
+        btnprice.setOnClickListener(s);
         btnaddtime = (Button) findViewById(R.id.btn_sort_addtime);
+        btnaddtime.setOnClickListener(s);
+        mCatChildFilterButton = (CatChildFilterButton) findViewById(R.id.btnCatChildFilter);
+        name= getIntent().getStringExtra(I.CategoryGroup.NAME);
     }
 
+    String name;
     class SortStatusChangedListener implements View.OnClickListener {
 
         @Override
