@@ -16,7 +16,7 @@ import android.widget.TextView;
 import cn.ucai.fulicenter.Fragment.BoutiqueFragment;
 import cn.ucai.fulicenter.Fragment.NewGoodFragment;
 import cn.ucai.fulicenter.R;
-import cn.ucai.fulicenter.adapter.PersonalFragment;
+import cn.ucai.fulicenter.Fragment.PersonalFragment;
 
 
 public class fulicenterMainActivity extends BaseActivity implements View.OnClickListener {

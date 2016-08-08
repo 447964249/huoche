@@ -1,5 +1,6 @@
-package cn.ucai.fulicenter.adapter;
+package cn.ucai.fulicenter.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,7 +17,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import cn.ucai.fulicenter.DemoHXSDKHelper;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.activity.SettingsActivity;
 import cn.ucai.fulicenter.activity.fulicenterMainActivity;
 
 /**
@@ -35,9 +38,29 @@ public class PersonalFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View layout = View.inflate(mContent, R.layout.fragment_personal_center, null);
         initView(layout);
+        setListener();
         return layout;
     }
 
+    private void setListener() {
+        myClickListener listener = new myClickListener();
+        mtvSettings.setOnClickListener(listener);
+        layoutUserCenter.setOnClickListener(listener);
+    }
+
+    class myClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+            if (DemoHXSDKHelper.getInstance().isLogined()) {
+                switch (view.getId()) {
+                    case R.id.tv_center_settings:
+                    case R.id.center_user_info:
+                        startActivity(new Intent(mContent,SettingsActivity.class));
+                }
+            }
+        }
+    }
     private void initView(View layout) {
         mivUserAvatar = (ImageView) layout.findViewById(R.id.iv_user_avatar);
         mtvUserName = (TextView) layout.findViewById(R.id.tv_user_name);
