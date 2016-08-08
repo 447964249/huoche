@@ -16,7 +16,7 @@ import android.widget.TextView;
 import cn.ucai.fulicenter.Fragment.BoutiqueFragment;
 import cn.ucai.fulicenter.Fragment.NewGoodFragment;
 import cn.ucai.fulicenter.R;
-
+import cn.ucai.fulicenter.adapter.PersonalFragment;
 
 
 public class fulicenterMainActivity extends BaseActivity implements View.OnClickListener {
@@ -24,12 +24,13 @@ public class fulicenterMainActivity extends BaseActivity implements View.OnClick
 
     NewGoodFragment mnowGoodFragment;
     BoutiqueFragment mBoutiqueFragment;
+    PersonalFragment mPersonalFragment;
+
     RelativeLayout mParentCart;
 
     Fragment mFragment [];
 
     //mNewGoodsFragment,mBoutiqueFragment,mCategoryFragment,mCollectFragment,mCartFragment,mContactFragment
-    NewGoodFragment mCategoryFragment;
     NewGoodFragment mCollectFragment;
     NewGoodFragment mCartFragment;
     /* NewGoodsFragment mNewGoodsFragment;
@@ -88,11 +89,11 @@ public class fulicenterMainActivity extends BaseActivity implements View.OnClick
     private void initFragments(){
         mnowGoodFragment = new NewGoodFragment();
         mBoutiqueFragment = new BoutiqueFragment();
-        mCategoryFragment =new NewGoodFragment();
+        mPersonalFragment =new PersonalFragment();
         mCollectFragment = new NewGoodFragment();
         mCartFragment =new NewGoodFragment();
 //        mContactFragment = new ContactFragment();
-        mFragment = new Fragment[]{mnowGoodFragment, mBoutiqueFragment, mCategoryFragment, mCollectFragment, mCartFragment};
+        mFragment = new Fragment[]{mnowGoodFragment, mBoutiqueFragment, mPersonalFragment, mCollectFragment, mCartFragment};
 
         //设置首先直接进入新品页面
         getSupportFragmentManager().beginTransaction()
@@ -154,8 +155,8 @@ public class fulicenterMainActivity extends BaseActivity implements View.OnClick
             case R.id.btn_personal:
               //  booleanRotationY(mtvpersonal);
                 setDrawable(mtvpersonal, Color.rgb(0xff, 0x66, 0xff), R.drawable.menu_item_personal_center_selected);
-//                mContactFragment = new ContactFragment();
-//                ft.replace(R.id.layoutContent, mContactFragment).commit();
+                mPersonalFragment = new PersonalFragment();
+                ft.replace(R.id.fragment_con, mPersonalFragment).commit();
                 break;
         }
     }
