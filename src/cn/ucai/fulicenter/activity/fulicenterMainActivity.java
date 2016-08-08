@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import cn.ucai.fulicenter.DemoHXSDKHelper;
 import cn.ucai.fulicenter.Fragment.BoutiqueFragment;
 import cn.ucai.fulicenter.Fragment.NewGoodFragment;
 import cn.ucai.fulicenter.R;
@@ -153,10 +154,13 @@ public class fulicenterMainActivity extends BaseActivity implements View.OnClick
 //                ft.replace(R.id.layoutContent, mCartFragment).commit();
                 break;
             case R.id.btn_personal:
-              //  booleanRotationY(mtvpersonal);
                 setDrawable(mtvpersonal, Color.rgb(0xff, 0x66, 0xff), R.drawable.menu_item_personal_center_selected);
-                mPersonalFragment = new PersonalFragment();
-                ft.replace(R.id.fragment_con, mPersonalFragment).commit();
+                if (DemoHXSDKHelper.getInstance().isLogined()) {
+
+                    mPersonalFragment = new PersonalFragment();
+                    ft.replace(R.id.fragment_con, mPersonalFragment).commit();
+                }
+                //  booleanRotationY(mtvpersonal);
                 break;
         }
     }
