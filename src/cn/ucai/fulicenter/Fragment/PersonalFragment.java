@@ -21,6 +21,9 @@ import cn.ucai.fulicenter.DemoHXSDKHelper;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activity.SettingsActivity;
 import cn.ucai.fulicenter.activity.fulicenterMainActivity;
+import cn.ucai.fulicenter.bean.UserAvatar;
+import cn.ucai.fulicenter.fulicenter;
+import cn.ucai.fulicenter.utils.UserUtils;
 
 /**
  * Created by Administrator on 2016/8/8.
@@ -38,8 +41,17 @@ public class PersonalFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View layout = View.inflate(mContent, R.layout.fragment_personal_center, null);
         initView(layout);
+        indate();
         setListener();
         return layout;
+    }
+
+    private void indate() {
+        if (DemoHXSDKHelper.getInstance().isLogined()) {
+            UserAvatar user= fulicenter.getInstance().getUser();
+            UserUtils.setAppCurrentUserNick(mtvUserName);
+            UserUtils.setAppCurrentUserAvatar(mContent,mivMSG);
+        }
     }
 
     private void setListener() {

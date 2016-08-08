@@ -179,7 +179,8 @@ public class SettingsActivity extends BaseActivity implements OnClickListener {
 		chatOptions = EMChatManager.getInstance().getChatOptions();
 		
 		model = (DemoHXSDKModel) HXSDKHelper.getInstance().getModel();
-		
+
+		//
 		// 震动和声音总开关，来消息时，是否允许此开关打开
 		// the vibrate and sound notification are allowed or not?
 		if (model.getSettingMsgNotification()) {
