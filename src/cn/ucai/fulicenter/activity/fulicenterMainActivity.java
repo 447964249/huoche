@@ -150,8 +150,9 @@ public class fulicenterMainActivity extends BaseActivity implements View.OnClick
             case R.id.btn_cart:
                // booleanRotationY(mtvCart);
                 setDrawable(mtvCart, Color.rgb(0xff, 0x66, 0xff), R.drawable.menu_item_cart_selected);
-//                mCartFragment = new CartFragment();
+// mCartFragment = new CartFragment();
 //                ft.replace(R.id.layoutContent, mCartFragment).commit();
+                TextView t = findViewById(R.id.unread_cart_number);
                 break;
             case R.id.btn_personal:
                 setDrawable(mtvpersonal, Color.rgb(0xff, 0x66, 0xff), R.drawable.menu_item_personal_center_selected);
