@@ -26,6 +26,6 @@
             android:layout_gravity="center_vertical"
             android:text="收藏商品详情"
             android:textSize="18dp"
-            android:textColor="@color/###"/>
+            android:textColor="#000"/>
     </LinearLayout>
 </RelativeLayout>
