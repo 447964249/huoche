@@ -39,6 +39,16 @@ public class fulicenter extends Application {
 	public static String currentUserNick = "";
 	public static DemoHXSDKHelper hxSDKHelper = new DemoHXSDKHelper();
 
+	public int getCollectCount() {
+		return collectCount;
+	}
+
+	public void setCollectCount(int collectCount) {
+		this.collectCount = collectCount;
+	}
+
+	/**全局的当前登录用户的收藏商品的数量*/
+	private int collectCount;
 	@Override
 	public void onCreate() {
 		super.onCreate();

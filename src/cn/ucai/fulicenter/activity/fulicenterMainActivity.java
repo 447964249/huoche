@@ -17,7 +17,7 @@ import cn.ucai.fulicenter.DemoHXSDKHelper;
 import cn.ucai.fulicenter.Fragment.BoutiqueFragment;
 import cn.ucai.fulicenter.Fragment.NewGoodFragment;
 import cn.ucai.fulicenter.R;
-import cn.ucai.fulicenter.Fragment.PersonalFragment;
+import cn.ucai.fulicenter.Fragment.PersonalCenterFragment;
 
 
 public class fulicenterMainActivity extends BaseActivity implements View.OnClickListener {
@@ -25,7 +25,7 @@ public class fulicenterMainActivity extends BaseActivity implements View.OnClick
 
     NewGoodFragment mnowGoodFragment;
     BoutiqueFragment mBoutiqueFragment;
-    PersonalFragment mPersonalFragment;
+    PersonalCenterFragment mPersonalFragment;
 
     RelativeLayout mParentCart;
 
@@ -90,7 +90,7 @@ public class fulicenterMainActivity extends BaseActivity implements View.OnClick
     private void initFragments(){
         mnowGoodFragment = new NewGoodFragment();
         mBoutiqueFragment = new BoutiqueFragment();
-        mPersonalFragment =new PersonalFragment();
+        mPersonalFragment =new PersonalCenterFragment();
         mCollectFragment = new NewGoodFragment();
         mCartFragment =new NewGoodFragment();
 //        mContactFragment = new ContactFragment();
@@ -157,7 +157,7 @@ public class fulicenterMainActivity extends BaseActivity implements View.OnClick
                 setDrawable(mtvpersonal, Color.rgb(0xff, 0x66, 0xff), R.drawable.menu_item_personal_center_selected);
                 if (DemoHXSDKHelper.getInstance().isLogined()) {
 
-                    mPersonalFragment = new PersonalFragment();
+                    mPersonalFragment = new PersonalCenterFragment();
                     ft.replace(R.id.fragment_con, mPersonalFragment).commit();
                 }
                 //  booleanRotationY(mtvpersonal);
