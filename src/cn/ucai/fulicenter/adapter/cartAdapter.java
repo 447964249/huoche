@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +20,17 @@ import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.View.FooterViewHolder;
 import cn.ucai.fulicenter.activity.BoutiqueDetailsActivity;
 import cn.ucai.fulicenter.bean.BoutiqueBean;
+import cn.ucai.fulicenter.bean.MessageBean;
+import cn.ucai.fulicenter.fulicenter;
 import cn.ucai.fulicenter.utils.ImageUtils;
+import cn.ucai.fulicenter.utils.OkHttpUtils2;
 import cn.ucai.fulicenter.widget.D;
 
 /**
  * Created by clawpo on 16/8/1.
  */
 public class cartAdapter extends RecyclerView.Adapter<ViewHolder> {
+    private static final String TAG ="cartAdapter" ;
     Context mContext;
     List<BoutiqueBean> mBoutiqueList;
     BoutiqueViewHolder mBoutiqueViewHolder;
@@ -112,9 +117,32 @@ public class cartAdapter extends RecyclerView.Adapter<ViewHolder> {
         }
         mBoutiqueList.addAll(list);
         notifyDataSetChanged();
+        final OkHttpUtils2<MessageBean> utils = new OkHttpUtils2<MessageBean>();
+        utils.setRequestUrl(I.REQUEST_FIND_COLLECT_COUNT)
+             //   .addParam(I.Collect.USER_NAME,username)
+                .targetClass(MessageBean.class)
+                .execute(new OkHttpUtils2.OnCompleteListener<MessageBean>() {
+                    @Override
+                    public void onSuccess(MessageBean msg) {
+                        Log.e(TAG,"s="+msg);
+                        if(msg!=null) {
+                            if(msg.isSuccess()){
+                                fulicenter.getInstance().setCollectCount(Integer.valueOf(msg.getMsg()));
+                            }else{
+                                fulicenter.getInstance().setCollectCount(0);
+                            }
+                            mContext.sendStickyBroadcast(new Intent("update_collect"));
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        Log.e(TAG,"error="+error);
+                    }
+                });
     }
 
-    public void addItem(ArrayList<BoutiqueBean> list) {
+    public void additem(ArrayList<BoutiqueBean> list) {
         mBoutiqueList.addAll(list);
         notifyDataSetChanged();
     }

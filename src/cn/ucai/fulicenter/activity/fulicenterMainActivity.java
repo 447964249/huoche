@@ -104,8 +104,10 @@ public class fulicenterMainActivity extends BaseActivity implements View.OnClick
                 .show(mnowGoodFragment)
                 .commit();
     }
+
     //定义旋转
     private void booleanRotationY(TextView tv){
+       // startActivityForResult();
         ViewPropertyAnimator animate = tv.animate();
         float rotationY = tv.getRotationY();
         if (rotationY < 360) {
@@ -152,7 +154,8 @@ public class fulicenterMainActivity extends BaseActivity implements View.OnClick
                 setDrawable(mtvCart, Color.rgb(0xff, 0x66, 0xff), R.drawable.menu_item_cart_selected);
 // mCartFragment = new CartFragment();
 //                ft.replace(R.id.layoutContent, mCartFragment).commit();
-                TextView t = findViewById(R.id.unread_cart_number);
+                TextView t = (TextView) findViewById(R.id.unread_cart_number);
+                t.setText("1");
                 break;
             case R.id.btn_personal:
                 setDrawable(mtvpersonal, Color.rgb(0xff, 0x66, 0xff), R.drawable.menu_item_personal_center_selected);
