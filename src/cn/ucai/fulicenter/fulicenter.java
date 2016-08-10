@@ -145,8 +145,16 @@ public class fulicenter extends Application {
 	private List<UserAvatar> userlist=new ArrayList<UserAvatar>();
 	/**全局的当前用户好友Map集合*/
 	private Map<String, UserAvatar> userMap = new HashMap<String, UserAvatar>();
+	/**全局的当前登录用户的购物车集合*/
+	private List<CartBean> cartList = new ArrayList<CartBean>();
 
+	public List<CartBean> getCartList() {
+		return cartList;
+	}
 
+	public void setCartList(List<CartBean> cartList) {
+		this.cartList = cartList;
+	}
 
 	public Map<String, UserAvatar> getUserMap() {
 		return userMap;
