@@ -157,9 +157,6 @@ public class cartFragment extends Fragment {
     private void finNewGoodList(OkHttpUtils2.OnCompleteListener<BoutiqueBean[]> listener) {
         OkHttpUtils2<BoutiqueBean[]> utils = new OkHttpUtils2<BoutiqueBean[]>();
         utils.setRequestUrl(I.REQUEST_FIND_BOUTIQUES)
-//                .addParam(I.NewAndBoutiqueGood.CAT_ID, String.valueOf(I.CAT_ID))
-//                .addParam(I.PAGE_ID, String.valueOf(pageId))
-//                .addParam(I.PAGE_SIZE, String.valueOf(I.PAGE_SIZE_DEFAULT))
                 .targetClass(BoutiqueBean[].class)
                 .execute(listener);
 

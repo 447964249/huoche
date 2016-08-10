@@ -53,7 +53,9 @@ public class fulicenter extends Application {
 
 	private List<CartBean> cartlist = new ArrayList<CartBean>();
 
+
 	public List<CartBean> getCartlist() {
+
 		return cartlist;
 	}
 
